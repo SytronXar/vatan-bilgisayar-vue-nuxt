@@ -1,5 +1,4 @@
 <script>
-import Products from "@/store/Products";
 import CartButtonItem from "@/components/CartButton/TheCartButtonItem";
 export default {
   components: {
@@ -7,8 +6,9 @@ export default {
   },
   data() {
     return {
-      productsData: Products.data,
-      Cart: Products.inCart,
+      Alldata:this.$store.state.Products,
+      productsData: this.$store.state.Products.data,
+      Cart: this.$store.state.Products.inCart,
       dropdownOpen: false
     };
   },
@@ -28,7 +28,7 @@ export default {
       this.Cart.forEach(cartItem => {
         total =
           total +
-          Products.data.find(data => data.id === cartItem.pid).cost*cartItem.count;
+          this.productsData.find(data => data.id === cartItem.pid).cost*cartItem.count;
       });
       return total;
     },

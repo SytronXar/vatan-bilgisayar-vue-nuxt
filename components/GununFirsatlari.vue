@@ -42,7 +42,6 @@
 <script>
 import Zeki from "@/components/Zeki";
 import ProductButton from "@/components/TheProductButton";
-import Products from "@/store/Products";
 export default {
   components: {
     Zeki,
@@ -51,7 +50,7 @@ export default {
 
   data() {
     return {
-      productsData: Products.data
+      productsData: this.$store.state.Products.data
     };
   },
 

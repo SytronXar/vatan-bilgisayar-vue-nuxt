@@ -26,11 +26,8 @@
         </div>
       </div>
       <div class="product-list__content">
-        <router-link
-          :to="{
-            name: 'ProductPage',
-            params: { productId: productData.id, producthref: ProductHref }
-          }"
+        <nuxt-link
+          :to="{ name:'productId', params: { productId: productId } }"
           class="product-list__link"
         >
           <div class="product-list__product-code">
@@ -39,7 +36,7 @@
           <div class="product-list__product-name">
             {{ productData.name }}
           </div>
-        </router-link>
+        </nuxt-link>
         <div class="product-list__cost">
           <span class="old-price">{{ formatPrice(productData.cost) }}</span>
           <span class="product-list__currency"> TL</span>
@@ -50,7 +47,7 @@
             class="in-wrapper-condition"
             v-show="
               productData.freeShipping === true ||
-                productData.fastShipping === true
+              productData.fastShipping === true
             "
           >
             <span class="icon-truck-alt wrapper-condition__icon"> </span>
@@ -63,7 +60,7 @@
               class="wrapper-condition__text"
               v-else-if="
                 productData.fastShipping === false &&
-                  productData.freeShipping === true
+                productData.freeShipping === true
               "
               >KARGO BEDAVA</span
             >
@@ -74,20 +71,19 @@
   </div>
 </template>
 <script>
-import Products from "@/store/Products";
 import ProductCarousel from "@/components/Carousel/ProductCarousel/ProductCarousel";
 import moment from "moment";
 export default {
   data() {
     return {
       imageWidth: 179.625,
-      currentShowImageIndex: 1
+      currentShowImageIndex: 1,
     };
   },
   components: { ProductCarousel },
   computed: {
     productData() {
-      return Products.data.find(data => data.id === this.productId);
+      return this.$store.state.Products.data.find((data) => data.id === this.productId);
     },
     owlStageWidth() {
       return this.productData.images.length * this.imageWidth;
@@ -97,17 +93,17 @@ export default {
     },
     ProductHref() {
       return this.productData.name.toLowerCase().replace(/\s/g, "-");
-    }
+    },
   },
   props: {
     productId: {
       type: String,
-      required: true
+      required: true,
     },
-    itemWidth:{
-        type: Number,
-        required:true
-    }
+    itemWidth: {
+      type: Number,
+      required: true,
+    },
   },
   methods: {
     formatPrice(value) {
@@ -127,7 +123,7 @@ export default {
     },
     onMouseOver() {
       //console.log(event.pageX - event.target.pageX);
-    }
-  }
+    },
+  },
 };
 </script>

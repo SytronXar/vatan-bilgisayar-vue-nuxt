@@ -1,5 +1,4 @@
 <script>
-import Products from "@/store/Products";
 export default {
   props: {
     cartId: {
@@ -17,10 +16,10 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     changeCount(number) {
-      Products.inCart[this.index].count += number;
+      this.inCart[this.index].count += number;
     },
     DeleteCartItem(){
-      Products.inCart.splice(this.index, 1);
+      this.inCart.splice(this.index, 1);
     },
     ProductHref() {
       return this.product.name.toLowerCase().replace(/\s/g, "-");
@@ -28,12 +27,20 @@ export default {
   },
   data() {
     return {
-      cartItem: Products.inCart.find(inCart => inCart.id === this.cartId)
     };
   },
   computed: {
+    Products(){
+      return this.$store.state.Products.data
+    },   
+    inCart(){
+      return this.$store.state.Products.inCart
+    },
     product() {
-      return Products.data.find(data => data.id === this.cartItem.pid);
+      return this.Products.find(data => data.id === this.cartItem.pid);
+    },
+    cartItem(){
+      return this.inCart.find(inCart => inCart.id === this.cartId)
     }
   },
 };

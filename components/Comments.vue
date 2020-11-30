@@ -1,11 +1,10 @@
 <script>
 // @ is an alias to /src
-import Products from "@/store/Products";
 export default {
   name: "UrunSayfasi",
   computed: {
     productData() {
-      return Products.data.find(data => data.id === this.productId);
+      return this.$store.state.Products.data.find(data => data.id === this.productId);
     }
   },
   props: {

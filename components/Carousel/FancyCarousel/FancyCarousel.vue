@@ -100,12 +100,16 @@ export default {
     },
     carouselItemX() {
       return this.carouselItemWidth + this.carouselItemMarginR;
+    },
+    Products(){
+      return this.$store.state.Products.data
+    },
+    nItem(){
+      return this.Products.length
     }
   },
   data() {
     return {
-      nItem: ProductJs.data.length,
-      Products: ProductJs.data,
       carouselItemWidth: 289.333,
       carouselItemMarginR: 6,
       owlStageX: 0,

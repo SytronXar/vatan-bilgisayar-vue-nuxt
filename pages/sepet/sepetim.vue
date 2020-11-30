@@ -1,12 +1,11 @@
 <script>
-import Products from "@/store/Products";
 import MyCartPanel from "@/components/MyCartPanel";
 export default {
   name: "CartPage",
   components: { MyCartPanel },
   data() {
     return {
-      Cart: Products.inCart,
+      Cart: this.$store.state.Products.inCart,
     };
   }
 };

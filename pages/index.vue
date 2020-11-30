@@ -10,5 +10,29 @@
 </template>
 
 <script>
-export default {}
+import TheWrapper from "@/components/TheWrapper";
+import CategoryDropbar from "@/components/CategoryDropbar";
+import FastShippingAd from "@/components/FastShippingAd";
+import BottomOfPage from "@/components/BottomOfPage";
+export default {
+  components: {
+    TheWrapper,
+    CategoryDropbar,
+    FastShippingAd,
+    BottomOfPage,
+  },
+  head(){
+    return {
+      title: "VATAN BİLGİSAYAR - Teknoloji & Bilgisayar Hiperstore'u"
+    }
+  },
+  methods: {},
+  mounted() {
+    document.addEventListener("dragstart", (e) => {
+      if (e.target.tagName === "IMG") {
+        e.preventDefault();
+      }
+    });
+  },
+};
 </script>

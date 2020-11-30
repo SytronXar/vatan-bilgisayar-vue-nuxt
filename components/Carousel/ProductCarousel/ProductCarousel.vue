@@ -1,32 +1,31 @@
 <template>
   <div class="product-list__image-safe">
-    <router-link 
-      :id="productId"
-      :to="{
-        name: 'ProductPage',
-        params: {
-          productId: productId,
-          producthref: ProductHref
-        }
-      }"
+    <nuxt-link
+      :to="{ name: 'productId', params: { productId: productId } }"
       class="product-list__image-safe-link sld product-pic-slider owl-carousel owl-loaded owl-drag"
       :class="{ 'owl-grab': owlGrab }"
       title=""
     >
-      <div class="owl-stage-outer" @mousemove="onMouseMovement()" :ref="referance" @mouseleave="onMouseLeave()">
+      <div
+        class="owl-stage-outer"
+        @mousemove="onMouseMovement()"
+        :ref="referance"
+        @mouseleave="onMouseLeave()"
+      >
         <div
           class="owl-stage"
           :style="{
             transform: 'translate3d(' + owlStageX + 'px, 0px, 0px)',
             transition: 'all 0.25s  ease 0s',
-            width: owlStageWidth + 'px'
+            width: owlStageWidth + 'px',
           }"
         >
           <!-- carousel buttons -->
           <ProductCarouselButton
             :imageSrc="image"
             v-for="image in productData.images"
-            :key="image" :itemWidth="itemWidth"
+            :key="image"
+            :itemWidth="itemWidth"
           />
         </div>
       </div>
@@ -38,7 +37,7 @@
         </button>
       </div>
       <div class="owl-dots disabled"></div
-    ></router-link>
+    ></nuxt-link>
     <ul class="img-slide-thumbs">
       <CarouselDot
         @clicked="onDotClick"
@@ -55,23 +54,22 @@
 
 <script>
 // @ is an alias to /src
-import ProductJs from "@/store/Products";
 import ProductCarouselButton from "@/components/Carousel/ProductCarousel/ProductCarouselButton";
 import CarouselDot from "@/components/Carousel/ProductCarousel/ProductCarouselDots";
 export default {
   props: {
     productId: {
       type: String,
-      required: true
+      required: true,
     },
-    itemWidth:{
-        type: Number,
-        required:true
-    }
+    itemWidth: {
+      type: Number,
+      required: true,
+    },
   },
   components: {
     ProductCarouselButton,
-    CarouselDot
+    CarouselDot,
   },
   computed: {
     ProductHref() {
@@ -82,10 +80,7 @@ export default {
     },
     nDot() {
       return Number(
-        (
-          this.owlStageWidth /
-          (this.carouselItemX * this.nItem)
-        ).toFixed()
+        (this.owlStageWidth / (this.carouselItemX * this.nItem)).toFixed()
       );
     },
     outerLenght() {
@@ -97,12 +92,12 @@ export default {
     carouselItemX() {
       return this.carouselItemWidth + this.carouselItemMarginR;
     },
-    getElementPosX(){
-        return this.$refs[this.referance].getBoundingClientRect().left;
+    getElementPosX() {
+      return this.$refs[this.referance].getBoundingClientRect().left;
     },
-    nItem(){
-        return this.productData.images.length;
-    }
+    nItem() {
+      return this.productData.images.length;
+    },
   },
   data() {
     return {
@@ -113,9 +108,8 @@ export default {
       mouseX: 0,
       owlGrab: false,
       nCarouselItem: 1,
-      productData: ProductJs.data.find(data => data.id === this.productId),
-      referance:this.productId+'oso',
-      
+      productData: this.$store.state.Products.data.find((data) => data.id === this.productId),
+      referance: this.productId + "oso",
     };
   },
   methods: {
@@ -131,19 +125,21 @@ export default {
       else this.owlStageX = toStageX;
     },
     onMouseMovement() {
-       var pX=this.getElementPosX;
-       var mouseX = event.pageX;
-       var diff=mouseX-pX;
-       var newTo= Number((Math.max(this.nItem*diff/this.carouselItemX-1,0)).toFixed());
-       console.log(newTo)
-       this.owlStageX=newTo*this.outerLenght*-1;
+      var pX = this.getElementPosX;
+      var mouseX = event.pageX;
+      var diff = mouseX - pX;
+      var newTo = Number(
+        Math.max((this.nItem * diff) / this.carouselItemX - 1, 0).toFixed()
+      );
+      console.log(newTo);
+      this.owlStageX = newTo * this.outerLenght * -1;
     },
-    onMouseLeave(){
-        this.owlStageX=0;
-    }
+    onMouseLeave() {
+      this.owlStageX = 0;
+    },
   },
   mounted() {
     /* var x = event.clientX; */
-  }
+  },
 };
 </script>

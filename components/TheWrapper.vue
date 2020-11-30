@@ -73,27 +73,24 @@
                       v-show="parent_open && loginStatus === false"
                     >
                       <li>
-                        <router-link
+                        <nuxt-link
                           :to="{
-                            name: 'LoginPage',
-                            params: {
-                              openLogin: true,
-                              loginhref: 'signin'
-                            }
+                            name: 'login-signstate',
+                            params: { openLogin: true, signstate: 'signin' },
                           }"
-                          >Giriş Yap</router-link
+                          >Giriş Yap</nuxt-link
                         >
                       </li>
                       <li>
-                        <router-link
+                        <nuxt-link
                           :to="{
-                            name: 'LoginPage',
+                            name: 'login-signstate',
                             params: {
                               openLogin: false,
-                              loginhref: 'signup'
-                            }
+                              signstate: 'signup',
+                            },
                           }"
-                          >Üye Ol</router-link
+                          >Üye Ol</nuxt-link
                         >
                       </li>
                     </ul>
@@ -127,13 +124,14 @@ import CartButton from "@/components/CartButton/TheCartButton";
 import LoginData from "@/store/LoginData";
 export default {
   components: {
-    TheTopBar,CartButton
+    TheTopBar,
+    CartButton,
   },
   computed: {},
   props: {},
   data() {
     return {
-      loginStatus: LoginData.loginStatus
+      loginStatus: LoginData.loginStatus,
     };
   },
   methods: {
@@ -150,7 +148,7 @@ export default {
     parent_open(event) {
       var Target = event.target;
       return Target.parentElement.classList.contains("open");
-    }
-  }
+    },
+  },
 };
 </script>

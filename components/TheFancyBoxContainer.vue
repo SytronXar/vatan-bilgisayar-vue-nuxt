@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      product: Products.data.find(data => data.id === this.productId),
+      product: this.$store.state.Products.data.find(data => data.id === this.productId),
       show:false
     };
   },

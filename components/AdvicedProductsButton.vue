@@ -1,6 +1,5 @@
 <script>
 // @ is an alias to /src
-import Products from "@/store/Products";
 export default {
   props: {
     productId: {
@@ -10,7 +9,7 @@ export default {
   },
   data() {
     return {
-      productData: Products.data.find(data => data.id === this.productId)
+      productData: this.$store.state.Products.data.find(data => data.id === this.productId)
     };
   },
   methods: {

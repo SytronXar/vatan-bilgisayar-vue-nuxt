@@ -1,6 +1,5 @@
 <script>
 // @ is an alias to /src
-import Products from "@/store/Products";
 import AdvicedProductsButton from "@/components/AdvicedProductsButton";
 export default {
   name: "UrunSayfasi",
@@ -17,7 +16,7 @@ export default {
     return {
       currentimg: 0,
       showFancy: false,
-      productData: Products.data.find(data => data.id === this.productId)
+      productData: this.$store.state.Products.data.find(data => data.id === this.productId)
     };
   },
   methods: {
@@ -48,7 +47,7 @@ export default {
       return name.toLowerCase().replace(/\s/g, "-");
     },
     getProductData(sProduct) {
-      return Products.data.find(data => data.id === sProduct);
+      return this.$store.state.Products.data.find(data => data.id === sProduct);
     }
   }
 };

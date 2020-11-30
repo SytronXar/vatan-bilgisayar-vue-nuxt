@@ -19,7 +19,7 @@ export default {
     return {
       currentimg: 0,
       showFancy: false,
-      productData: Products.data.find(data => data.id === this.productId),
+      productData: this.$store.state.Products.data.find(data => data.id === this.productId),
       randomVisitor: Math.random() * (25 - 1) + 1
     };
   },

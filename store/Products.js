@@ -1,4 +1,4 @@
-export default {
+export const state = () => ({
   /* addItemToCart(pid, count){
     var isValid=  this.inCart.includes(inCart => inCart.id === pid).id
     if(isValid){
@@ -1026,4 +1026,4 @@ export default {
       ]
     }
   ]
-};
+})

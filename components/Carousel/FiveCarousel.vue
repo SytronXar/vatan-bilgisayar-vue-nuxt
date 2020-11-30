@@ -1,6 +1,5 @@
 <script>
 // @ is an alias to /src
-import ProductJs from "@/store/Products";
 import FiveCarouselButton from "@/components/Carousel/FiveCarouselButton";
 import CarouselDot from "@/components/Carousel/CarouselDot";
 export default {
@@ -29,12 +28,16 @@ export default {
     },
     carouselItemX() {
       return this.carouselItemWidth + this.carouselItemMarginR;
+    },
+    Products(){
+      return this.$store.state.Products.data
+    },
+    nItem(){
+      return this.Products.length
     }
   },
   data() {
     return {
-      nItem: ProductJs.data.length,
-      Products: ProductJs.data,
       carouselItemWidth: 262.4,
       carouselItemMarginR: 6,
       owlStageX: 0,

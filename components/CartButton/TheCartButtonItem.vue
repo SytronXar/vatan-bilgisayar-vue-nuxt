@@ -16,8 +16,8 @@ export default {
   },
   data() {
     return {
-      cartItem: Products.inCart.find(inCart => inCart.id === this.CartId),
-      product: Products.data.find(data => data.id === this.pId)
+      cartItem: this.$store.state.Products.inCart.find(inCart => inCart.id === this.CartId),
+      product: this.$store.state.Products.data.find(data => data.id === this.pId)
     };
   },
   methods: {

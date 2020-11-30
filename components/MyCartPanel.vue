@@ -5,8 +5,6 @@ export default {
   components: { BasketCartTableRow },
   data() {
     return {
-      Cart: Products.inCart,
-      CartProducts:this.GetProducts()
     };
   },
   computed:{
@@ -15,24 +13,23 @@ export default {
       this.Cart.forEach(cartItem => {
         total =
           total +
-          Products.data.find(data => data.id === cartItem.pid).cost *
+          this.Products.find(data => data.id === cartItem.pid).cost *
             cartItem.count;
       });
       return total;
     },
+    Products(){
+      return this.$store.state.Products.data
+    },
+    Cart(){
+      return this.$store.state.Products.inCart
+    }
     
   },
   methods: {
     formatPrice(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
-    GetProducts(){
-      var products;
-      for(var cartItem in this.Cart){
-        products.push(Products.data.find(data => data.id === cartItem.pid))
-      }
-      return products;
     },
     OnItemCountChanged(...args){
       const [cartCount,productId] =args
