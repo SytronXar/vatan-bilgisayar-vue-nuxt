@@ -2,7 +2,7 @@
   <div
     class="header-banner"
   >
-  <router-link
+  <nuxt-link
             :to="{
               name: 'HizliTeslimat',
             }">
@@ -15,6 +15,6 @@
         data-src="https://cdn.vatanbilgisayar.com/Upload/BANNER//yeni-tasarim/anasayfa/2020_EKIM/yt-kargo.jpg"
         class="lazyimg hidden-md hidden-sm hidden-lg"
       />
-  </router-link>
+  </nuxt-link>
   </div>
 </template>
