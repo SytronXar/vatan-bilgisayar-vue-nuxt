@@ -11,34 +11,66 @@
               </NuxtLink>
             </li>
             <li class="topbar-menu__item">
-              <a href="/firsat-urunler" class="topbar-menu__link">
-                <span class="icon-arrow-down-percent topbar-menu__icon"></span>
-                <span class="topbar-menu__text">Fırsat</span>
-              </a>
+              <nuxt-link
+                :to="{
+                  name: 'kapsamdisi',
+                }"
+              >
+                <a class="topbar-menu__link">
+                  <span
+                    class="icon-arrow-down-percent topbar-menu__icon"
+                  ></span>
+                  <span class="topbar-menu__text">Fırsat</span>
+                </a>
+              </nuxt-link>
             </li>
             <li class="topbar-menu__item">
-              <a href="/yeni-urunler" class="topbar-menu__link">
-                <span class="icon-warranty topbar-menu__icon"></span>
-                <span class="topbar-menu__text">Yeni</span>
-              </a>
+              <nuxt-link
+                :to="{
+                  name: 'kapsamdisi',
+                }"
+              >
+                <a class="topbar-menu__link">
+                  <span class="icon-warranty topbar-menu__icon"></span>
+                  <span class="topbar-menu__text">Yeni</span>
+                </a>
+              </nuxt-link>
             </li>
             <li class="topbar-menu__item">
-              <a href="/pc-toplama" class="topbar-menu__link">
-                <span class="icon-warranty topbar-menu__icon"></span>
-                <span class="topbar-menu__text">PC Toplama</span>
-              </a>
+              <nuxt-link
+                :to="{
+                  name: 'kapsamdisi',
+                }"
+              >
+                <a class="topbar-menu__link">
+                  <span class="icon-warranty topbar-menu__icon"></span>
+                  <span class="topbar-menu__text">PC Toplama</span>
+                </a>
+              </nuxt-link>
             </li>
             <li class="topbar-menu__item">
-              <a href="/outlet" class="topbar-menu__link">
-                <span class="icon-box-hand topbar-menu__icon"></span>
-                <span class="topbar-menu__text">Outlet</span>
-              </a>
+              <nuxt-link
+                :to="{
+                  name: 'kapsamdisi',
+                }"
+              >
+                <a class="topbar-menu__link">
+                  <span class="icon-box-hand topbar-menu__icon"></span>
+                  <span class="topbar-menu__text">Outlet</span>
+                </a>
+              </nuxt-link>
             </li>
             <li class="topbar-menu__item">
-              <a href="/magazalar" class="topbar-menu__link">
-                <span class="icon-store-line topbar-menu__icon"></span>
-                <span class="topbar-menu__text">Mağazalar</span>
-              </a>
+              <nuxt-link
+                :to="{
+                  name: 'kapsamdisi',
+                }"
+              >
+                <a class="topbar-menu__link">
+                  <span class="icon-store-line topbar-menu__icon"></span>
+                  <span class="topbar-menu__text">Mağazalar</span>
+                </a>
+              </nuxt-link>
             </li>
             <li class="topbar-menu__item">
               <a href="/uyeBilgi/siparistakip" class="topbar-menu__link">
@@ -47,10 +79,16 @@
               </a>
             </li>
             <li class="topbar-menu__item">
-              <a href="/iletisim" class="topbar-menu__link">
-                <span class="icon-callcenter topbar-menu__icon"></span>
-                <span class="topbar-menu__text">Bize Ulaşın!</span>
-              </a>
+              <nuxt-link
+                :to="{
+                  name: 'kapsamdisi',
+                }"
+              >
+                <a class="topbar-menu__link">
+                  <span class="icon-callcenter topbar-menu__icon"></span>
+                  <span class="topbar-menu__text">Bize Ulaşın!</span>
+                </a>
+              </nuxt-link>
             </li>
           </ul>
         </div>

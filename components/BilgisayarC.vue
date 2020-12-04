@@ -281,7 +281,6 @@
 <script>
 import ProductButton from "@/components/TheProductButton";
 import CategoriesBilgisayar from "@/components/CategoriesBilgisayar";
-import Products from "@/store/Products";
 export default {
   components: {
     ProductButton,
@@ -290,7 +289,7 @@ export default {
 
   data() {
     return {
-      productsData: Products.data
+      productsData: this.$store.state.Products.data
     };
   },
 

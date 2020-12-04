@@ -375,13 +375,13 @@
                 @mouseenter="OpenDropdown"
                 @mouseleave="CloseDropdown"
               >
-                <router-link
+                <nuxt-link
                   class="nav-first-link"
                   :to="{
                     name: 'Bilgisayar'
                   }"
                   >Bilgisayar
-                </router-link>
+                </nuxt-link>
                 <div class="dropdown-menu">
                   <div class="row">
                     <div class="menu-wrapper col-lg-9">
