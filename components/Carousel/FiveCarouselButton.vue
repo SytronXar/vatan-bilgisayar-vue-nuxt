@@ -32,15 +32,7 @@ export default {
     <div class="item ss">
       <div class="product-list product-list--fourth">
         <div class="product-list__image-safe">
-          <router-link
-            :id="productId"
-            :to="{
-              name: 'ProductPage',
-              params: {
-                productId: productId,
-                producthref: ProductHref()
-              }
-            }"
+          <nuxt-link :to="{name:'productId', params:{productId:productId}}"
             class="product-list__image-safe-link vl-product-alter"
             ><picture>
               <source
@@ -55,7 +47,7 @@ export default {
                 :title="productData.name"
                 class="img-responsive product-list__image"
               /> </picture
-          ></router-link>
+          ></nuxt-link>
         </div>
         <div class="product-list__content">
           <div class="product-list__product-name">
