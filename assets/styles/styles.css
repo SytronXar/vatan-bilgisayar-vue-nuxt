@@ -11941,10 +11941,11 @@ button.swiper-pagination-bullet {
 /*
 .icon-trash-alt:before {
   content: "\e94c";
-}
+}*/
 .icon-truck-alt:before {
-  content: "\e94d";
+  content: "\f0d1";
 }
+/*
 .icon-truck-line:before {
   content: "\e94e";
 }

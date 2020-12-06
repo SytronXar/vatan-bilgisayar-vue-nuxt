@@ -4,7 +4,7 @@
   >
   <nuxt-link
             :to="{
-              name: 'HizliTeslimat',
+              name: 'hizli-teslimat',
             }">
       <img
         src="https://cdn.vatanbilgisayar.com/Upload/BANNER//yeni-tasarim/anasayfa/2020_EKIM/yt-kargo.jpg"

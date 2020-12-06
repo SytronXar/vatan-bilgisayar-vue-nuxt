@@ -3,12 +3,12 @@ export default {
   props: {
     cartId: {
       type: String,
-      required: true
+      required: true,
     },
-    index:{
+    index: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     formatPrice(value) {
@@ -18,30 +18,29 @@ export default {
     changeCount(number) {
       this.inCart[this.index].count += number;
     },
-    DeleteCartItem(){
+    DeleteCartItem() {
       this.inCart.splice(this.index, 1);
     },
     ProductHref() {
       return this.product.name.toLowerCase().replace(/\s/g, "-");
-    }
+    },
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
-    Products(){
-      return this.$store.state.Products.data
-    },   
-    inCart(){
-      return this.$store.state.Products.inCart
+    Products() {
+      return this.$store.state.Products.data;
+    },
+    inCart() {
+      return this.$store.state.Products.inCart;
     },
     product() {
-      return this.Products.find(data => data.id === this.cartItem.pid);
+      return this.Products.find((data) => data.id === this.cartItem.pid);
     },
-    cartItem(){
-      return this.inCart.find(inCart => inCart.id === this.cartId)
-    }
+    cartItem() {
+      return this.inCart.find((inCart) => inCart.id === this.cartId);
+    },
   },
 };
 </script>
@@ -49,20 +48,20 @@ export default {
   <div class="basket-cart__table-row">
     <div class="basket-cart__table-column info">
       <div class="basket-cart__product-info">
-        <router-link
+        <nuxt-link
           :to="{
-            name: 'ProductPage',
+            name: 'productId',
             params: {
               productId: product.id,
-              producthref: ProductHref()
-            }
+              producthref: ProductHref(),
+            },
           }"
         >
           <div class="basket-cart__product-image">
             <img :src="product.images[0]" class="" alt="" />
           </div>
           <div class="basket-cart__product-name">{{ product.name }}</div>
-        </router-link>
+        </nuxt-link>
         <ul class="basket-cart__product-badges hidden-xs hidden-sm">
           <li class="discount"></li>
         </ul>
@@ -87,7 +86,7 @@ export default {
               onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57"
               type="number"
               :value="cartItem.count"
-              style="text-align: right;"
+              style="text-align: right"
             />
           </form>
           <span>Adet</span>
@@ -108,13 +107,13 @@ export default {
     <div class="basket-cart__table-column warranty">
       <span>Garantiyi Uzat</span>
       <input
-        class="apple-switch basket-cart__product-switch warranty-toggler "
+        class="apple-switch basket-cart__product-switch warranty-toggler"
         checked=""
         type="checkbox"
         onchange="warrantyToggler(event)"
       />
     </div>
-    <div class="basket-cart__table-column text-center remove ">
+    <div class="basket-cart__table-column text-center remove">
       <a
         href="javascript:void(0)"
         class="basket-cart__product-remove"
@@ -133,7 +132,7 @@ export default {
       </p>
       <div class="basket-installment-carousel swiper-container">
         <ul class="swiper-wrapper">
-          <li class="swiper-slide active ">
+          <li class="swiper-slide active">
             <label class="wrapper-radio wrapper-radio-product">
               <input
                 type="radio"
@@ -147,7 +146,7 @@ export default {
               {{ formatPrice((cartItem.count * product.cost) / 6.6) }} TL
             </div>
           </li>
-          <li class="swiper-slide active ">
+          <li class="swiper-slide active">
             <label class="wrapper-radio wrapper-radio-product">
               <input
                 type="radio"
@@ -161,7 +160,7 @@ export default {
               {{ formatPrice((cartItem.count * product.cost) / 5) }} TL
             </div>
           </li>
-          <li class="swiper-slide active ">
+          <li class="swiper-slide active">
             <label class="wrapper-radio wrapper-radio-product">
               <input
                 type="radio"

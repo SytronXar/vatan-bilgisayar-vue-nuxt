@@ -1,3 +1,4 @@
+
 export const state = () => ({
   /* addItemToCart(pid, count){
     var isValid=  this.inCart.includes(inCart => inCart.id === pid).id
@@ -7,21 +8,101 @@ export const state = () => ({
   }, */
   inCart: [
     {
-      id:"1", pid: "111981", count: 1,
+      id: "1", pid: "111981", count: 1,
     },
     {
-      id:"2", pid:"9105", count:1
-    }  
+      id: "2", pid: "9105", count: 1
+    }
   ],
-  categories:[
+  categories: [
     {
-      id:"0", name: "Tüketici Elektroniği",  parentHierarchy:[]
+      id: "0", name: "Tüketici Elektroniği", parentHierarchy: []
     },
     {
-      id:"1", name: "Telefon",  parentHierarchy:["0", ]
+      id: "1", name: "Telefon", parentHierarchy: ["0",]
     },
     {
-      id:"2", name: "Bilgisayar", parentHierarchy:[]
+      id: "2", name: "Bilgisayar", parentHierarchy: []
+    },
+    {
+      id: "3", name: "Masaüstü Aksesuarlar", parentHierarchy: ["2"]
+    },
+    {
+      id: "4", name: "Masaüstü Bilgisayarlar", parentHierarchy: ["2"]
+    },
+    {
+      id: "5", name: "Notebook", parentHierarchy: ["2"]
+    },
+    {
+      id: "6", name: "Tablet", parentHierarchy: ["2"]
+    },
+    {
+      id: "7", name: "Taşınabilir Aksesuarlar", parentHierarchy: ["2"]
+    },
+    {
+      id: "8", name: "Yazılım", parentHierarchy: ["2"]
+    }
+  ],
+  markalar: [
+    {
+      id: "1", name: "Acer", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/acer/acer.jpg"
+    },
+    {
+      id: "2", name: "Alcatel", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/alcatel/alcatel.jpg"
+    },
+    {
+      id: "3", name: "Apple", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/apple/apple.jpg"
+    },
+    {
+      id: "4", name: "Asus", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/asus/asus.jpg"
+    },
+    {
+      id: "5", name: "Beats", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/beats/beats.jpg"
+    },
+    {
+      id: "6", name: "Dell", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/dell/dell.jpg"
+    },
+    {
+      id: "7", name: "Everpad", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/everpad/everpad.jpg"
+    },
+    {
+      id: "8", name: "Exper", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/exper/exper.jpg"
+    },
+    {
+      id: "9", name: "Hometech", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/hometech/hometech.jpg"
+    },
+    {
+      id: "10", name: "Hp", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/hp/hp.jpg"
+    },
+    {
+      id: "11", name: "Huawei", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/huawei/huawei.jpg"
+    },
+    {
+      id: "12", name: "Lenovo", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/lenovo/lenovo.jpg"
+    },
+    {
+      id: "13", name: "Microsoft", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/microsoft/microsoft.jpg"
+    },
+    {
+      id: "14", name: "MSI", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/msi/msi.jpg"
+    },
+    {
+      id: "15", name: "Samsung", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/samsung/samsung.jpg"
+    },
+    {
+      id: "16", name: "S-Link", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/s-link/s-link.jpg"
+    },
+    {
+      id: "17", name: "Addison", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/addison/addison.jpg"
+    },
+    {
+      id: "18", name: "Case Logic", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/case-logic/case-logic.jpg"
+    },
+    {
+      id: "19", name: "Targus", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/targus/targus.jpg"
+    },
+    {
+      id: "20", name: "Thule", Logo: "https://cdn.vatanbilgisayar.com/Upload//MARKA/thule/thule.jpg"
     }
   ],
   data: [
@@ -35,6 +116,8 @@ export const state = () => ({
       code: "UX363EA-EM045T",
       name:
         "ASUS ZENBOOK 13 UX363 CORE İ7 1165G7 2.8GHZ-16GB RAM-1TB SSD-13.3'-INT-W10",
+      categoryId: "5",
+      MarkaId: "4",
       cost: 19635,
       productLaunchTime: "2020-11-05" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -98,6 +181,8 @@ export const state = () => ({
       id: "88816",
       code: "SDRW-08U9M-U-BLACK",
       name: "ASUS SDRW-08U9M-U ZENDRIVE HARİCİ SLİM DVD-YAZICI - SİYAH",
+      categoryId: "7",
+      MarkaId: "4",
       cost: 413,
       productLaunchTime: "2020-08-10",
       rate: 5,
@@ -157,8 +242,10 @@ export const state = () => ({
     {
       id: "84459",
       code: "QQ2-00006",
-      name:"Online Microsoft 365 Bireysel (1 kullanıcı-1yıl) (Dijital İndirilebilir Lisans)",
+      name: "Online Microsoft 365 Bireysel (1 kullanıcı-1yıl) (Dijital İndirilebilir Lisans)",
       cost: 550,
+      categoryId: "8",
+      MarkaId: "13",
       productLaunchTime: "2020-08-10",
       rate: 0,
       markalogosu:
@@ -175,7 +262,7 @@ export const state = () => ({
       ],
       comments: [
       ],
-      moreInformation:[
+      moreInformation: [
 
       ]
     },
@@ -184,6 +271,8 @@ export const state = () => ({
       code: "MB16AMT",
       name:
         "ASUS 15,6' MB16AMT ZenScreen taşınabilir Dokunmatik IPS FullHD USB monitör",
+      categoryId: "7",
+      MarkaId: "4",
       cost: 4355,
       productLaunchTime: "2020-08-10",
       rate: 5,
@@ -225,7 +314,7 @@ export const state = () => ({
         {
           date: "2020-08-27",
           time: "00:33:00",
-          rate:"5",
+          rate: "5",
           name: "engin yöner",
           highlight_comment: "ÇOK KULLANIŞLI",
           comment:
@@ -248,6 +337,8 @@ export const state = () => ({
       code: "G315-4B30W85C",
       name:
         "DELL G315 CORE İ5 10300H 2.5GHZ-8GB RAM-512GB SSD-GTX1650TI 4GB-15.6-W10",
+      categoryId: "5",
+      MarkaId: "6",
       cost: 10018,
       productLaunchTime: "2020-06-05" /* ürünün satışa sunulma tarihi */,
       rate: 4 /* yıldız */,
@@ -341,6 +432,8 @@ export const state = () => ({
       id: "300873",
       code: "88174",
       name: "ADDISON 300873 13.3 - 14 NOTEBOOK SIRT ÇANTASI (SİYAH)",
+      categoryId: "7",
+      MarkaId: "17",
       cost: 142,
       productLaunchTime: "2020-01-07" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -377,6 +470,8 @@ export const state = () => ({
       code: "81TC000VTX",
       name:
         "LENOVO YOGA C740 CORE İ7 10510U 1.8GHZ-8GB RAM-512GB SSD-14''-INT-TOUCH-W10",
+      categoryId: "5",
+      MarkaId: "12",
       cost: 10092,
       productLaunchTime: "2020-08-22" /* ürünün satışa sunulma tarihi */,
       rate: 5 /* yıldız */,
@@ -462,6 +557,8 @@ export const state = () => ({
       id: "69791",
       code: "CA.ANC316",
       name: "CASE LOGIC CA.ANC316 NOTEBOOK ÇANTASI 15.6 SİYAH",
+      categoryId: "7",
+      MarkaId: "18",
       cost: 179,
       productLaunchTime: "2020-01-07" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -495,6 +592,8 @@ export const state = () => ({
       id: "79651",
       code: "L6V67AA",
       name: "HP 14'' SİGNATURE II SLİM TOPLOAD NOTEBOOK ÇANTASI",
+      categoryId: "7",
+      MarkaId: "10",
       cost: 221,
       productLaunchTime: "2020-01-07" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -527,6 +626,8 @@ export const state = () => ({
       id: "9105",
       code: "TAR300Z",
       name: "TARGUS TAR300Z 15.6'' NOTEBOOK ÇANTASI- (SİYAH)",
+      categoryId: "7",
+      MarkaId: "19",
       cost: 170,
       productLaunchTime: "2020-01-07" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -560,6 +661,8 @@ export const state = () => ({
       id: "109276",
       code: "CA.TGAE2356",
       name: "Thule Gauntlet 4.0 15 MacBookPro / Ultrabook Çanta",
+      categoryId: "7",
+      MarkaId: "20",
       cost: 549,
       productLaunchTime: "2020-01-07" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -595,6 +698,8 @@ export const state = () => ({
       id: "89614",
       code: "L8J89AA",
       name: "HP 15.6 ODYSSEY NOTEBOOK SIRT ÇANTASI -(GRİ)",
+      categoryId: "7",
+      MarkaId: "10",
       cost: 406,
       productLaunchTime: "2020-05-05" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -628,6 +733,8 @@ export const state = () => ({
       code: "CA.WMBP115GY",
       name:
         "CASE LOGIC CA.WMBP115GY JAUNT 15.6'' NOTEBOOK SIRT ÇANTASI- (KOYU GRİ)",
+      categoryId: "7",
+      MarkaId: "18",
       cost: 299,
       productLaunchTime: "2020-05-05" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -661,6 +768,8 @@ export const state = () => ({
       code: "KJT-00006",
       name:
         "MICROSOFT SURFACE PRO 6 CORE İ5 8250U 1.6GHZ-8GB RAM-256GB SSD-INT-12.3 W10",
+      categoryId: "5",
+      MarkaId: "13",
       cost: 14530,
       productLaunchTime: "2020-11-05" /* ürünün satışa sunulma tarihi */,
       rate: 5 /* yıldız */,
@@ -748,6 +857,8 @@ export const state = () => ({
       code: "MATEBOOK X PRO/2020",
       name:
         "HUAWEI MATEBOOK X PRO 2020 CORE İ7 10510U 1.8GHZ-16GB-1TBSSD-13.9 -MX250 2GB-W10",
+      categoryId: "5",
+      MarkaId: "11",
       cost: 14999,
       productLaunchTime: "2019-04-08" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -809,6 +920,8 @@ export const state = () => ({
       code: "UX581LV-H2013T",
       name:
         "ASUS ZENBOOK PRO DUO UX581 CORE İ7 10750H 2.6GHZ-32GB-1TB-15.6 -RTX2060 6GB-W10",
+      categoryId: "5",
+      MarkaId: "4",
       cost: 32074,
       productLaunchTime: "2020-04-08" /* ürünün satışa sunulma tarihi */,
       rate: 0 /* yıldız */,
@@ -872,6 +985,8 @@ export const state = () => ({
       code: "7390-FS510W161N",
       name:
         "DELL XPS 13 7390 CORE İ7 10710U 1.1GHZ-16GB RAM-1TB SSD-INT-13.3 W10",
+      categoryId: "5",
+      MarkaId: "6",
       cost: 17494,
       productLaunchTime: "2018-02-22" /* ürünün satışa sunulma tarihi */,
       rate: 4 /* yıldız */,
@@ -951,6 +1066,8 @@ export const state = () => ({
       code: "81Q9007FTX",
       name:
         "LENOVO YOGA C940 CORE İ7 1065G7 1.3GHZ-16GB RAM-512GB SSD-14''-INT-TOUCH-W10",
+      categoryId: "5",
+      MarkaId: "12",
       cost: 15999,
       productLaunchTime: "2020-03-10" /* ürünün satışa sunulma tarihi */,
       rate: 4 /* yıldız */,
@@ -1025,5 +1142,150 @@ export const state = () => ({
         "105261"
       ]
     }
-  ]
+  ],
+  filter: {
+    minPrice: 0,
+    maxPrice: 0,
+    searchString: "",
+    secilmisMarkalar: ["13","4"],
+    secilmisKategori: ""
+  },
+  filteredProductList: [-1]
 })
+
+export const getters = {
+
+  getProductWithId: (state) => (id) => {
+    return state.data.find(item => item.id === id)
+  },
+  getCategoryWithId: (state) => (id) => {
+    return state.categories.find(item => item.id === id)
+  },
+  getMarkaWithId: (state) => (id) => {
+    return state.markalar.find(item => item.id === id)
+  },
+  isInSecilmisMarkalar: (state) => (id) => {
+    return state.filter.secilmisMarkalar.includes(id);
+  },
+
+  getFilteredProducts: (state) => () => {
+    if (state.filteredProductList[0] === -1) {
+      state.filteredProductList = state.data;
+      return state.filteredProductList;
+    }
+    return state.filteredProductList;
+  },
+  getNumberOfProductInCategoryInFilter: (state, getters) => (id) => {
+    var array = getters.getFilteredProducts.filter(item => item.categoryId === id)
+    return array.length;
+  },
+  getNumberOfProductInMarkaInFilter: (state, getters) => (id) => {
+    var array = getters.getFilteredProducts.filter(item => item.MarkaId === id);
+    return array.length;
+  },
+
+  searchWithString: (state) => (productsData) => {
+    if (state.filter.searchString === "") {
+      return productsData;
+    }
+    var substrings = state.filter.searchString.split(" ");
+    var findedProducts = productsData;
+    substrings.forEach(element => {
+      findedProducts = findedProducts.filter(product => product.name.toLowerCase().includes(element.toLowerCase()));
+    });
+    return findedProducts;
+
+  },
+
+  searchWithPrice: (state) => (productsData) => {
+    var findedProducts = productsData;
+    if (state.filter.maxPrice === 0) {
+      return findedProducts;
+    }
+    return findedProducts.filter(product => product.cost <= state.filter.maxPrice && product.cost >= state.filter.minPrice);
+  },
+
+  markalarlaArama: (state) => (productsData) => {
+    var mergedArray=[];
+    if (state.filter.secilmisMarkalar.length <= 0) {
+      return productsData;
+    }
+    state.filter.secilmisMarkalar.forEach(marka => {
+     /*  mergedArray=mergedArray.push(...productsData.filter(product => product.MarkaId === marka)); */
+      mergedArray=[].concat.apply(mergedArray, productsData.filter(product => product.MarkaId === marka)) 
+    });
+    return mergedArray;
+  },
+  kategoriyleArama: (state) => (productsData) => {
+    if (state.filter.secilmisKategori == "") {
+      return productsData;
+    }
+    return productsData.filter(product => product.categoryId === state.filter.secilmisKategori)
+  },
+
+  productFilter: (state, getters) => () => {
+
+    state.filteredProductList = getters.kategoriyleArama(getters.markalarlaArama(getters.searchWithPrice(getters.searchWithString(state.data))));
+    return state.filteredProductList;
+  }
+}
+
+export const actions = {
+  setFilter({ commit }, filter) {
+    commit('setFilter', filter)
+  },
+  setNameFilter({ commit }, key) {
+    commit('setNameFilter', key)
+  },
+  setCostFilter({ commit }, costs) {
+    commit('setNameFilter', costs)
+  },
+  setFilteredProductList({ commit }, filteredList) {
+    commit('setFilteredProductList', filteredList)
+  },
+  setSecilmisCategori({ commit }, id) {
+    commit('setSecilmisCategori', id);
+  },
+  addSecilmisMarka({ commit }, id) {
+    commit('addSecilmisMarka', id);
+  },
+  removeSecilmisMarka({ commit }, id) {
+    commit('removeSecilmisMarka', id);
+  },
+}
+
+
+export const mutations = {
+  setFilter(state, filter) {
+    state.filter = filter
+    console.log(filter.searchString)
+  },
+  setNameFilter(state, key) {
+    state.filter.searchString = key;
+    console.log(key)
+  },
+  setCostFilter(state, costs) {
+    state.filter.minPrice = costs.min;
+    state.filter.maxPrice = costs.max;
+  },
+  setFilteredProductList(state, filteredList) {
+    state.filteredProductList = filteredList;
+  },
+  setSecilmisCategory(state, id) {
+    state.filter.secilmisKategori = id;
+  },
+  clearSecilmisCategory(state) {
+    state.filter.secilmisKategori = ""
+  },
+  addSecilmisMarka(state, id) {
+    if (state.filter.secilmisMarkalar.includes(id)) {
+      return;
+    }
+    state.filter.secilmisMarkalar.push(id);
+  },
+  removeSecilmisMarka(state, id) {
+    if (state.filter.secilmisMarkalar.includes(id)) {
+      state.filter.secilmisMarkalar.splice(state.filter.secilmisMarkalar.indexOf(id), 1)
+    }
+  }
+}

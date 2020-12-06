@@ -7,17 +7,21 @@ export default {
   props: {
     CartId: {
       type: String,
-      required: true
+      required: true,
     },
     pId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      cartItem: this.$store.state.Products.inCart.find(inCart => inCart.id === this.CartId),
-      product: this.$store.state.Products.data.find(data => data.id === this.pId)
+      cartItem: this.$store.state.Products.inCart.find(
+        (inCart) => inCart.id === this.CartId
+      ),
+      product: this.$store.state.Products.data.find(
+        (data) => data.id === this.pId
+      ),
     };
   },
   methods: {
@@ -27,19 +31,18 @@ export default {
     formatPrice(value) {
       let val = (value / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-  }
+    },
+  },
 };
 </script>
 <template>
-  <router-link
-    :id="pId"
+  <nuxt-link
     :to="{
-      name: 'ProductPage',
+      name: 'productId',
       params: {
         productId: pId,
-        producthref: ProductHref()
-      }
+        producthref: ProductHref(),
+      },
     }"
   >
     <picture class="active">
@@ -50,7 +53,9 @@ export default {
     </picture>
     <div class="wrapper-product-text">
       <span class="product-name">{{ product.name }}</span>
-      <span class="product-cost">{{ formatPrice(product.cost*cartItem.count) }}</span>
+      <span class="product-cost">{{
+        formatPrice(product.cost * cartItem.count)
+      }}</span>
     </div>
-  </router-link>
+  </nuxt-link>
 </template>

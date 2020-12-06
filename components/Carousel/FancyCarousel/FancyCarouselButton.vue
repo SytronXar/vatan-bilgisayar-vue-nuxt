@@ -1,16 +1,15 @@
 <template>
-  <div class="owl-item active" style="width: 289.333px; margin-right: 6px;">
+  <div class="owl-item active" style="width: 289.333px; margin-right: 6px">
     <div id="104376" class="item">
       <div class="most-popular-fancy">
-        <router-link
-            :id="productId"
-            :to="{
-              name: 'ProductPage',
-              params: {
-                productId: productId,
-                producthref: ProductHref()
-              }
-            }"
+        <nuxt-link
+          :to="{
+            name: 'productId',
+            params: {
+              productId: productId,
+              producthref: ProductHref(),
+            },
+          }"
           class="most-popular-table d-table"
           ><div class="d-cell">
             <picture
@@ -22,14 +21,16 @@
             /></picture>
           </div>
           <p class="d-cell">
-            <span class="i-title"
-              >{{ productData.name }}</span
-            >
+            <span class="i-title">{{ productData.name }}</span>
           </p>
           <p class="d-cell">
-            <span></span><span class="old-price">{{ formatPrice(productData.cost) }} TL</span
-            ><span class="price">{{ formatPrice(productData.cost*0.9) }} <span>TL</span></span>
-          </p></router-link
+            <span></span
+            ><span class="old-price"
+              >{{ formatPrice(productData.cost) }} TL</span
+            ><span class="price"
+              >{{ formatPrice(productData.cost * 0.9) }} <span>TL</span></span
+            >
+          </p></nuxt-link
         ><a
           href="javascript:void(0)"
           onclick="AddBundleFromPopUp(104376, 0, 0,103888,359,'MWVU2ZM/A')"
@@ -48,13 +49,15 @@ export default {
   props: {
     productId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {},
   data() {
     return {
-      productData: this.$store.state.Products.data.find(data => data.id === this.productId)
+      productData: this.$store.state.Products.data.find(
+        (data) => data.id === this.productId
+      ),
     };
   },
   methods: {
@@ -64,7 +67,7 @@ export default {
     },
     ProductHref() {
       return this.productData.name.toLowerCase().replace(/\s/g, "-");
-    }
-  }
+    },
+  },
 };
 </script>

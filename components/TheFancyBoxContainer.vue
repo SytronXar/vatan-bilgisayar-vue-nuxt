@@ -3,31 +3,33 @@ import FancyCarousel from "@/components/Carousel/FancyCarousel/FancyCarousel";
 import Products from "@/store/Products";
 export default {
   components: {
-    FancyCarousel
+    FancyCarousel,
   },
   props: {
     productId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      product: this.$store.state.Products.data.find(data => data.id === this.productId),
-      show:false
+      product: this.$store.state.Products.data.find(
+        (data) => data.id === this.productId
+      ),
+      show: false,
     };
   },
   methods: {
     formatPrice(value) {
       let val = (value / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
+    },
   },
   computed: {
     ProductHref() {
       return this.product.name.toLowerCase().replace(/\s/g, "-");
-    }
-  }
+    },
+  },
 };
 </script>
 <template>
@@ -36,7 +38,7 @@ export default {
     role="dialog"
     tabindex="-1"
     id="fancybox-container-2"
-    style="transition-duration: 366ms;"
+    style="transition-duration: 366ms"
   >
     <div class="fancybox-bg"></div>
     <div class="fancybox-inner">
@@ -62,7 +64,7 @@ export default {
           data-fancybox-play=""
           class="fancybox-button fancybox-button--play"
           title="Start slideshow"
-          style="display: none;"
+          style="display: none"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M6.5 5.4v13.2l11-6.6z"></path></svg
@@ -75,7 +77,7 @@ export default {
           data-fancybox-thumbs=""
           class="fancybox-button fancybox-button--thumbs"
           title="Thumbnails"
-          style="display: none;"
+          style="display: none"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path
@@ -131,12 +133,12 @@ export default {
           <div
             class="fancy-modal fancy-modal-add fancybox-content"
             id="modal-basket"
-            style="display: inline-block;"
+            style="display: inline-block"
           >
             <div class="fancy-modal-header">
               <div class="col-xs-12 m-b-0 message-modal">
                 <span class="icon-check round"></span
-                ><span style="color:green;">Ürün Eklendi.</span>
+                ><span style="color: green">Ürün Eklendi.</span>
               </div>
               <div class="d-cell col-sm-1 col-xs-3 short-image">
                 <a href="javascript:void(0)">
@@ -151,17 +153,17 @@ export default {
                 </a>
               </div>
               <div class="d-cell col-sm-5 col-xs-5 short-name">
-                <router-link
+                <nuxt-link
                   :to="{
-                    name: 'ProductPage',
+                    name: 'productId',
                     params: {
                       productId: product.id,
-                      producthref: ProductHref
-                    }
+                      producthref: ProductHref,
+                    },
                   }"
                 >
                   <span> {{ product.name }} </span>
-                </router-link>
+                </nuxt-link>
               </div>
               <div class="d-cell col-xs-3 short-price">
                 <span class="product-list__price">{{
@@ -170,7 +172,7 @@ export default {
                 <span class="product-list__currency">TL</span>
               </div>
             </div>
-            
+
             <FancyCarousel :message="'BUNDLE ÜRÜNLER'" />
 
             <div class="fancy-modal-footer fancy-modal-list">
@@ -211,7 +213,7 @@ export default {
               data-fancybox-close=""
               class="fancybox-button fancybox-close-small"
               title="Close"
-              @click="$emit('close',show)"
+              @click="$emit('close', show)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

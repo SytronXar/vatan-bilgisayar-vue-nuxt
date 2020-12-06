@@ -38,7 +38,7 @@
           </div>
         </nuxt-link>
         <div class="product-list__cost">
-          <span class="old-price">{{ formatPrice(productData.cost) }}</span>
+          <span class="product-list__price">{{ formatPrice(productData.cost) }}</span>
           <span class="product-list__currency"> TL</span>
           <span class="product-list__current-price"> </span>
         </div>
@@ -83,7 +83,7 @@ export default {
   components: { ProductCarousel },
   computed: {
     productData() {
-      return this.$store.state.Products.data.find((data) => data.id === this.productId);
+      return this.$store.state.Products.data.find(data => data.id === this.productId);
     },
     owlStageWidth() {
       return this.productData.images.length * this.imageWidth;

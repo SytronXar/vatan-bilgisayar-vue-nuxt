@@ -29,10 +29,9 @@ export default {
   <div class="discount-item">
     <div class="d-table clearfix">
       <div class="d-cell">
-        <router-link
-          :id="productId"
+        <nuxt-link
           :to="{
-            name: 'ProductPage',
+            name: 'productId',
             params: {
               productId: productId,
               producthref: ProductHref()
@@ -43,7 +42,7 @@ export default {
             <img :src="productData.images[0]" alt="urunismi" />
           </picture>
           <span class="prod-name">{{ productData.name }} </span>
-        </router-link>
+        </nuxt-link>
       </div>
       <div class="d-cell">
         <span class="old-price">{{ formatPrice(productData.cost) }} TL</span>

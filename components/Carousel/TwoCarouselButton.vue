@@ -6,13 +6,15 @@ export default {
   props: {
     productId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {},
   data() {
     return {
-      productData: this.$store.state.Products.data.find(data => data.id === this.productId)
+      productData: this.$store.state.Products.data.find(
+        (data) => data.id === this.productId
+      ),
     };
   },
   methods: {
@@ -22,25 +24,24 @@ export default {
     },
     ProductHref() {
       return this.productData.name.toLowerCase().replace(/\s/g, "-");
-    }
-  }
+    },
+  },
 };
 </script>
 <template>
-  <div class="owl-item active" style="width: 665px; margin-right: 6px;">
+  <div class="owl-item active" style="width: 665px; margin-right: 6px">
     <div class="item">
       <div
         class="product-list product-list--second product-list--second__first-item"
       >
         <div class="product-list__image-safe product-list--second__image-safe">
-          <router-link
-            :id="productId"
+          <nuxt-link
             :to="{
-              name: 'ProductPage',
+              name: 'productId',
               params: {
                 productId: productId,
-                producthref: ProductHref()
-              }
+                producthref: ProductHref(),
+              },
             }"
             title=""
             class="product-list__image-safe-link"
@@ -53,7 +54,7 @@ export default {
                 :title="productData.name"
               />
             </picture>
-          </router-link>
+          </nuxt-link>
         </div>
 
         <div class="product-list__content product-list--second__content">
@@ -68,39 +69,39 @@ export default {
             </span>
           </div>
           <div class="product-list__product-code">
-            <router-link
-              :id="productId"
+            <nuxt-link
               :to="{
-                name: 'ProductPage',
+                name: 'productId',
                 params: {
                   productId: productId,
-                  producthref: ProductHref()
-                }
+                  producthref: ProductHref(),
+                },
               }"
               class="clasic-link"
               title=""
             >
               {{ productData.code }}
-            </router-link>
+            </nuxt-link>
           </div>
           <div class="product-list__product-name">
-            <router-link
-              :id="productId"
+            <nuxt-link
               :to="{
-                name: 'ProductPage',
+                name: 'productId',
                 params: {
                   productId: productId,
-                  producthref: ProductHref()
-                }
+                  producthref: ProductHref(),
+                },
               }"
               class="clasic-link"
               title=""
             >
               {{ productData.name }}
-            </router-link>
+            </nuxt-link>
           </div>
           <div class="product-list__cost">
-            <span class="product-list__price">{{ formatPrice(productData.cost) }} </span>
+            <span class="product-list__price"
+              >{{ formatPrice(productData.cost) }}
+            </span>
             <span class="product-list__currency">TL</span>
             <span class="product-list__current-price"
               >{{ formatPrice(productData.cost * 1.1) }} TL</span

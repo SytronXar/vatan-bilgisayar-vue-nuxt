@@ -17,17 +17,18 @@
       <div class="global-container">
         <div class="wrapper-opportunity-content clearfix">
           <div class="wrapper-detailpage-header clearfix">
-            <div class="wrapper-detailpage-header__item-left" style="text-align: left">
-              <h1 class="wrapper-detailpage-header__title">
-                Bilgisayar
-              </h1>
+            <div
+              class="wrapper-detailpage-header__item-left"
+              style="text-align: left"
+            >
+              <h1 class="wrapper-detailpage-header__title">Bilgisayar</h1>
               Bilgisayar ürünleri, modelleri ve fiyatları özel indirim ve taksit
               seçenekleri sadece Vatan Bilgisayar'da! Şimdi bilgisayar satın al!
               <p class="wrapper-detailpage-header__text">
                 Bilgisayar kategorisinde
                 <strong
-                  ><span>Bilgisayar</span> modellerinde <span>{{productsData.length}}</span> adet
-                  ürün </strong
+                  ><span>Bilgisayar</span> modellerinde
+                  <span>{{ productsData.length }}</span> adet ürün </strong
                 >bulundu.
               </p>
             </div>
@@ -106,9 +107,10 @@
                 <div class="row">
                   <!--V-for ile sıfırdan yapılacak-->
                   <ProductButton
-                    :productId="getProductID(index)"
-                    v-for="(n, index) in getMaxAvailableListCount(18)"
-                    :key="n" :itemWidth="125"
+                    :productId="n.id"
+                    v-for="n in productFilter()"
+                    :key="n.id"
+                    :itemWidth="125"
                   />
                 </div>
               </div>
@@ -281,27 +283,33 @@
 <script>
 import ProductButton from "@/components/TheProductButton";
 import CategoriesBilgisayar from "@/components/CategoriesBilgisayar";
+import { mapGetters } from "vuex";
 export default {
   components: {
     ProductButton,
-    CategoriesBilgisayar
+    CategoriesBilgisayar,
   },
 
   data() {
-    return {
-      productsData: this.$store.state.Products.data
-    };
+    return {};
   },
 
-  computed: {},
+  computed: {
+    ...mapGetters({
+      productFilter: "Products/productFilter",
+    }),
+  },
   methods: {
+    productsData() {
+      return this.productFilter();
+    },
     getProductID(index) {
       return this.productsData[index].id;
     },
     getMaxAvailableListCount(number) {
       if (this.productsData.length < number) return this.productsData.length;
       return number;
-    }
-  }
+    },
+  },
 };
 </script>

@@ -378,7 +378,7 @@
                 <nuxt-link
                   class="nav-first-link"
                   :to="{
-                    name: 'Bilgisayar'
+                    name: 'bilgisayar'
                   }"
                   >Bilgisayar
                 </nuxt-link>
