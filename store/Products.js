@@ -1143,12 +1143,22 @@ export const state = () => ({
       ]
     }
   ],
+  FiyatFiltreleri: [
+    { id: "0", name: "200-499TL", min: 200, max: 499 },
+    { id: "1", name: "500-999TL", min: 500, max: 999 },
+    { id: "2", name: "1000-1999TL", min: 1000, max: 1999 },
+    { id: "3", name: "2000-2999TL", min: 2000, max: 2999 },
+    { id: "4", name: "3000-4999TL", min: 3000, max: 4999 },
+    { id: "5", name: "5000-9999TL", min: 5000, max: 9999 },
+    { id: "6", name: "10000TL-Üzeri", min: 10000, max: 999999 },
+  ],
   filter: {
     minPrice: 0,
     maxPrice: 0,
     searchString: "",
-    secilmisMarkalar: ["13","4"],
-    secilmisKategori: ""
+    secilmisMarkalar: [],
+    secilmisKategori: "",
+    secilmisFiyatlar:[]
   },
   filteredProductList: [-1]
 })
@@ -1164,8 +1174,15 @@ export const getters = {
   getMarkaWithId: (state) => (id) => {
     return state.markalar.find(item => item.id === id)
   },
-  isInSecilmisMarkalar: (state) => (id) => {
-    return state.filter.secilmisMarkalar.includes(id);
+  getFiyatFiltreWithId: (state) => (id) => {
+    return state.FiyatFiltreleri.find(item => item.id === id)
+  },
+  isInSecilmisMarkalar(state) {
+    return (id) => { return state.filter.secilmisMarkalar.includes(id); }
+  },
+  isInSecilmisFiyatlar:(state)=>(id)=> {
+      console.log("bardakk")
+      return state.filter.secilmisFiyatlar.includes(id);
   },
 
   getFilteredProducts: (state) => () => {
@@ -1181,6 +1198,11 @@ export const getters = {
   },
   getNumberOfProductInMarkaInFilter: (state, getters) => (id) => {
     var array = getters.getFilteredProducts.filter(item => item.MarkaId === id);
+    return array.length;
+  },
+  getNumberOfProductInFiyatFiltreInFilter: (state, getters) => (id) => {
+    var fiyatFiltre=getters.getFiyatFiltreWithId(id);
+    var array = getters.getFilteredProducts.filter(product => product.cost <= fiyatFiltre.max && product.cost >= fiyatFiltre.min);
     return array.length;
   },
 
@@ -1204,28 +1226,37 @@ export const getters = {
     }
     return findedProducts.filter(product => product.cost <= state.filter.maxPrice && product.cost >= state.filter.minPrice);
   },
-
   markalarlaArama: (state) => (productsData) => {
-    var mergedArray=[];
+    var mergedArray = [];
     if (state.filter.secilmisMarkalar.length <= 0) {
       return productsData;
     }
     state.filter.secilmisMarkalar.forEach(marka => {
-     /*  mergedArray=mergedArray.push(...productsData.filter(product => product.MarkaId === marka)); */
-      mergedArray=[].concat.apply(mergedArray, productsData.filter(product => product.MarkaId === marka)) 
+      /*  mergedArray=mergedArray.push(...productsData.filter(product => product.MarkaId === marka)); */
+      mergedArray = [].concat.apply(mergedArray, productsData.filter(product => product.MarkaId === marka))
     });
     return mergedArray;
   },
+  fiyatFiltreleriyleArama:(state,getters) => (productsData)=>{
+    var mergedArray = [];
+   
+    if (state.filter.secilmisFiyatlar.length <= 0) {
+      return productsData;
+    }
+    state.filter.secilmisFiyatlar.forEach(fiyatFiltreId => {
+      var fiyatFiltre=state.FiyatFiltreleri.find(item => item.id === fiyatFiltreId);
+      mergedArray=[].concat.apply(mergedArray,productsData.filter(product=>product.cost <= fiyatFiltre.max && product.cost >= fiyatFiltre.min))
+    }); 
+    return mergedArray;
+  },
   kategoriyleArama: (state) => (productsData) => {
-    if (state.filter.secilmisKategori == "") {
+    if (state.filter.secilmisKategori === "") {
       return productsData;
     }
     return productsData.filter(product => product.categoryId === state.filter.secilmisKategori)
   },
-
   productFilter: (state, getters) => () => {
-
-    state.filteredProductList = getters.kategoriyleArama(getters.markalarlaArama(getters.searchWithPrice(getters.searchWithString(state.data))));
+    state.filteredProductList = getters.fiyatFiltreleriyleArama(getters.kategoriyleArama(getters.markalarlaArama(getters.searchWithPrice(getters.searchWithString(state.data)))));
     return state.filteredProductList;
   }
 }
@@ -1251,6 +1282,12 @@ export const actions = {
   },
   removeSecilmisMarka({ commit }, id) {
     commit('removeSecilmisMarka', id);
+  },
+  addSecilmisFiyat({ commit }, id) {
+    commit('addSecilmisFiyat', id);
+  },
+  removeSecilmisFiyat({ commit }, id) {
+    commit('removeSecilmisFiyat', id);
   },
 }
 
@@ -1286,6 +1323,17 @@ export const mutations = {
   removeSecilmisMarka(state, id) {
     if (state.filter.secilmisMarkalar.includes(id)) {
       state.filter.secilmisMarkalar.splice(state.filter.secilmisMarkalar.indexOf(id), 1)
+    }
+  },
+  addSecilmisFiyat(state, id) {
+    if (state.filter.secilmisFiyatlar.includes(id)) {
+      return;
+    }
+    state.filter.secilmisFiyatlar.push(id);
+  },
+  removeSecilmisFiyat(state, id) {
+    if (state.filter.secilmisFiyatlar.includes(id)) {
+      state.filter.secilmisFiyatlar.splice(state.filter.secilmisFiyatlar.indexOf(id), 1)
     }
   }
 }

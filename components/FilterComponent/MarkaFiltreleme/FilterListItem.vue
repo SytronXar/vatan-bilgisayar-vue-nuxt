@@ -21,10 +21,7 @@ export default {
       getMarkaWithId: "Products/getMarkaWithId",
       countOfProductInMarka: "Products/getNumberOfProductInMarkaInFilter",
       isInSecilmisMarkalar: "Products/isInSecilmisMarkalar",
-    }) /* ,
-    ...mapState({
-        secilmisKategori:state=>state.Products.filter.secilmisKategori,        
-    }), */,
+    }),
     marka() {
       return this.getMarkaWithId(this.markaId);
     },
