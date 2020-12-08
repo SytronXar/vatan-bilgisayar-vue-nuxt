@@ -182,7 +182,7 @@ export default {
                   <div class="col-xs-12 text-right">
                     <a href="/" class="go-back">Alışverişe Geri Dön</a>
                     <form
-                      action="/Basket/ToFirstStep"
+                      action="/sepet/sepetim"
                       method="post"
                       role="form"
                     >

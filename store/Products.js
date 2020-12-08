@@ -8,10 +8,10 @@ export const state = () => ({
   }, */
   inCart: [
     {
-      id: "1", pid: "111981", count: 1,
+      id: 1, pid: "111981", count: 1,
     },
     {
-      id: "2", pid: "9105", count: 1
+      id: 2, pid: "9105", count: 1
     }
   ],
   categories: [
@@ -1158,7 +1158,7 @@ export const state = () => ({
     searchString: "",
     secilmisMarkalar: [],
     secilmisKategori: "",
-    secilmisFiyatlar:[]
+    secilmisFiyatlar: []
   },
   filteredProductList: [-1]
 })
@@ -1180,9 +1180,9 @@ export const getters = {
   isInSecilmisMarkalar(state) {
     return (id) => { return state.filter.secilmisMarkalar.includes(id); }
   },
-  isInSecilmisFiyatlar:(state)=>(id)=> {
-      console.log("bardakk")
-      return state.filter.secilmisFiyatlar.includes(id);
+  isInSecilmisFiyatlar: (state) => (id) => {
+    console.log("bardakk")
+    return state.filter.secilmisFiyatlar.includes(id);
   },
 
   getFilteredProducts: (state) => () => {
@@ -1201,7 +1201,7 @@ export const getters = {
     return array.length;
   },
   getNumberOfProductInFiyatFiltreInFilter: (state, getters) => (id) => {
-    var fiyatFiltre=getters.getFiyatFiltreWithId(id);
+    var fiyatFiltre = getters.getFiyatFiltreWithId(id);
     var array = getters.getFilteredProducts.filter(product => product.cost <= fiyatFiltre.max && product.cost >= fiyatFiltre.min);
     return array.length;
   },
@@ -1237,16 +1237,16 @@ export const getters = {
     });
     return mergedArray;
   },
-  fiyatFiltreleriyleArama:(state,getters) => (productsData)=>{
+  fiyatFiltreleriyleArama: (state, getters) => (productsData) => {
     var mergedArray = [];
-   
+
     if (state.filter.secilmisFiyatlar.length <= 0) {
       return productsData;
     }
     state.filter.secilmisFiyatlar.forEach(fiyatFiltreId => {
-      var fiyatFiltre=state.FiyatFiltreleri.find(item => item.id === fiyatFiltreId);
-      mergedArray=[].concat.apply(mergedArray,productsData.filter(product=>product.cost <= fiyatFiltre.max && product.cost >= fiyatFiltre.min))
-    }); 
+      var fiyatFiltre = state.FiyatFiltreleri.find(item => item.id === fiyatFiltreId);
+      mergedArray = [].concat.apply(mergedArray, productsData.filter(product => product.cost <= fiyatFiltre.max && product.cost >= fiyatFiltre.min))
+    });
     return mergedArray;
   },
   kategoriyleArama: (state) => (productsData) => {
@@ -1262,6 +1262,9 @@ export const getters = {
 }
 
 export const actions = {
+  sepeteEkle({ commit }, item) {
+    commit('sepeteEkle', item)
+  },
   setFilter({ commit }, filter) {
     commit('setFilter', filter)
   },
@@ -1293,6 +1296,18 @@ export const actions = {
 
 
 export const mutations = {
+  sepeteEkle(state, item) {
+    if (state.inCart.filter(c=>c.pid===item.pid).length>0) {
+      state.inCart.find(c=>c.pid===item.pid).count++;
+      return;
+    }
+    var incart = state.inCart
+    var Id = incart[incart.length - 1] + 1;
+    var pid = item.pid;
+    var count = item.count;
+    var newitem = { Id, pid, count }
+    state.inCart.push(newitem);
+  },
   setFilter(state, filter) {
     state.filter = filter
     console.log(filter.searchString)
@@ -1335,5 +1350,6 @@ export const mutations = {
     if (state.filter.secilmisFiyatlar.includes(id)) {
       state.filter.secilmisFiyatlar.splice(state.filter.secilmisFiyatlar.indexOf(id), 1)
     }
-  }
+  },
+
 }
