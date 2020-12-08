@@ -6,7 +6,7 @@ export default {
   computed: {},
   props: {
     CartId: {
-      type: String,
+      type: Number,
       required: true,
     },
     pId: {

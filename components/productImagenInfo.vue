@@ -34,7 +34,7 @@ export default {
     AddToBasket() {
       var pid=this.productId;
       var count=1;
-      this.$store.commit("Products/sepeteEkle", {pid,count});
+      this.$store.commit("Products/sepeteEkle", {pid, count});
       this.showFancy = true;
     },
     getComment(index) {

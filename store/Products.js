@@ -1301,11 +1301,11 @@ export const mutations = {
       state.inCart.find(c=>c.pid===item.pid).count++;
       return;
     }
-    var incart = state.inCart
-    var Id = incart[incart.length - 1] + 1;
+    var incart = state.inCart;
+    var id = incart[incart.length-1].id + 1;
     var pid = item.pid;
     var count = item.count;
-    var newitem = { Id, pid, count }
+    var newitem = { id, pid, count }
     state.inCart.push(newitem);
   },
   setFilter(state, filter) {

@@ -2,7 +2,7 @@
 export default {
   props: {
     cartId: {
-      type: String,
+      type: Number,
       required: true,
     },
     index: {
@@ -36,10 +36,10 @@ export default {
       return this.$store.state.Products.inCart;
     },
     product() {
-      return this.Products.find((data) => data.id === this.cartItem.pid);
+      return this.Products.find(data => data.id === this.cartItem.pid);
     },
     cartItem() {
-      return this.inCart.find((inCart) => inCart.id === this.cartId);
+      return this.inCart.find(inCart => inCart.id === this.cartId);
     },
   },
 };
