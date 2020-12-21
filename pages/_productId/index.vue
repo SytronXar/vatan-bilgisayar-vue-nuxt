@@ -14,17 +14,12 @@ export default {
   },
   head() {
     return {
-      /* title: this.getProductWithId(this.productId).name,
+      title: this.getTitle,
       //meta taglar sayfa hakkında açıklayıcı bilgiler bulundururlar.
       meta: [
-        { name: "description",  content: this.getProductWithId(this.productId).name },
-      ], */
+        { name: "description",  content: this.getTitle,},
+      ], 
     };
-  },
-  created(){
-    console.log("productId eşittir :" + this.productId)
-    //console.log("nullmu?="+this.getProductWithId(this.productId)!=null?"null değil":"null")
-    //console.log(this.$store.state.Products.data.find(data => data.id === this.productId).name)
   },
   beforeMount(){
     this.fetchProducts()
@@ -32,7 +27,10 @@ export default {
   computed: {
     ...mapGetters({
       getProductWithId: "Products/getProductWithId"
-    })
+    }),
+    getTitle(){
+      return !this.getProductWithId(this.productId)? "Vatan Bilgisayar" : this.getProductWithId(this.productId).name
+    }
   },
   data() {
     return {
@@ -56,7 +54,9 @@ export default {
 </script>
 <template>
   <body class="has-top-banner" tabindex="0">
-    <div v-if="!this.getProductWithId(this.productId)">Loading Please wait...</div>
+    <div class="deneme" v-if="!this.getProductWithId(this.productId)">
+      <img  src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif" alt="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif">
+    </div>
     <main v-else>
       <input type="hidden" id="visilabs-categoryId" value="notebook"  />
       <div class="wrapper-breadcrumb">

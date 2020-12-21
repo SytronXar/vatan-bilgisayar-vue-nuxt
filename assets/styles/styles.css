@@ -33660,3 +33660,10 @@ input.apple-switch:checked:after {
     opacity: 1;
   }
 }
+.deneme {
+  width: 600px;
+  height: 300px;
+  padding: 20px;
+  position: relative;
+  margin: auto;
+}
