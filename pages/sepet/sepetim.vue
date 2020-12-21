@@ -1,18 +1,34 @@
 <script>
 import MyCartPanel from "@/components/MyCartPanel";
+import { mapGetters,mapActions } from "vuex";
 export default {
   name: "CartPage",
   components: { MyCartPanel },
+  created(){
+    this.fetchProducts()
+    this.fetchCartItems()
+  },
+  computed:{
+    ...mapGetters({
+      Products: "Products/Products",
+      Cart: "Products/Cart",
+    }),
+  },
+  methods: {
+    ...mapActions({
+    fetchProducts:  'Products/fetchProducts',
+    fetchCartItems: 'Products/fetchCartItems'
+    }),
+  },
   data() {
     return {
-      Cart: this.$store.state.Products.inCart,
     };
   }
 };
 </script>
 <template>
   <main class="basket-main-area" style="margin-top:8.5px">
-    <div class="basket basket-addresses" v-if="Cart.length < 1">
+    <div class="basket basket-addresses" v-if="Cart().length < 1">
       <div class="global-container">
         <div class="row">
           <div class="col-xs-12">

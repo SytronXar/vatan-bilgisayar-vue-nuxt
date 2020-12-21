@@ -1,10 +1,17 @@
 <script>
+import { mapGetters } from "vuex";
 // @ is an alias to /src
 export default {
   name: "UrunSayfasi",
   computed: {
-    productData() {
-      return this.$store.state.Products.data.find(data => data.id === this.productId);
+    ...mapGetters({
+      getProductWithId: "Products/getProductWithId"
+    }),
+    productData(){
+      this.getProductWithId(this.productId)
+    },
+    commentsLength(){
+      return this.getProductWithId(this.productId).comments!=null ? this.getProductWithId(this.productId).comments.length : 0 
     }
   },
   props: {
@@ -29,7 +36,7 @@ export default {
             <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <h4 class="tab-pane--title">
-                  Bu ürünle toplam <a>{{ productData.comments.length }}</a> adet
+                  Bu ürünle toplam <a>{{ commentsLength }}</a> adet
                   yorum yapıldı.
                 </h4>
                 <form
@@ -80,7 +87,7 @@ export default {
                     <picture>
                       <!--[if IE 9]></video><![endif]-->
                       <img
-                        :src="productData.images[0]"
+                        :src="getProductWithId(productId).images[0]"
                         class="img-responsive product-list__image product-list--third__image"
                       />
                     </picture>
@@ -92,18 +99,18 @@ export default {
                           class="score"
                           id="topAverageRank"
                           :style="{
-                            width: (100 * productData.rate) / 5 + '%'
+                            width: (100 * getProductWithId(productId).rate) / 5 + '%'
                           }"
                         ></span>
                       </div>
                       <span style=""
                         >Bu ürün
-                        <b>{{ productData.comments.length }}</b> yorumdan
+                        <b>{{ commentsLength }}</b> yorumdan
                         ortalama</span
                       >
                       <span>
                         <strong id="averageRankNum">
-                          {{ 13.5 / productData.comments.length }}</strong
+                          {{ 13.5 / commentsLength }}</strong
                         >
                         Puan Almıştır</span
                       >
@@ -215,7 +222,7 @@ export default {
                 <div
                   id="itemContainer"
                   class="row"
-                  v-for="comment in productData.comments"
+                  v-for="comment in getProductWithId(productId).comments"
                   :key="comment"
                 >
                   <div

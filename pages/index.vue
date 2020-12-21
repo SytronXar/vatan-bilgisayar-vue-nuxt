@@ -10,29 +10,28 @@
 </template>
 
 <script>
-import TheWrapper from "@/components/TheWrapper";
-import CategoryDropbar from "@/components/CategoryDropbar";
-import FastShippingAd from "@/components/FastShippingAd";
-import BottomOfPage from "@/components/BottomOfPage";
+import GununFirsatlari from "@/components/GununFirsatlari";
+import TwoCarousel from "@/components/Carousel/TwoCarousel";
+import FiveCarousel from "@/components/Carousel/FiveCarousel";
+import { mapActions } from "vuex";
 export default {
   components: {
-    TheWrapper,
-    CategoryDropbar,
-    FastShippingAd,
-    BottomOfPage,
+    GununFirsatlari,
+    TwoCarousel,
+    FiveCarousel
   },
   head(){
     return {
       title: "VATAN BİLGİSAYAR - Teknoloji & Bilgisayar Hiperstore'u"
     }
   },
-  methods: {},
-  mounted() {
-    document.addEventListener("dragstart", (e) => {
-      if (e.target.tagName === "IMG") {
-        e.preventDefault();
-      }
-    });
+  methods: {
+    ...mapActions({
+    fetchProducts:  'Products/fetchProducts',
+    }),
   },
+  created(){
+    this.fetchProducts()
+  }
 };
 </script>

@@ -3,8 +3,19 @@
 import Products from "@/store/Products";
 import AdvicedProductsC from "@/components/AdvicedProductsC";
 import TheFancyBoxContainer from "@/components/TheFancyBoxContainer";
+import { mapGetters,mapActions } from "vuex";
 export default {
-  computed: {},
+  computed: {
+    ...mapGetters({
+      getProductWithId: "Products/getProductWithId"
+    }),
+    productData(){
+      this.getProductWithId(this.productId)
+    },
+    commentsLength(){
+      return this.getProductWithId(this.productId).comments!=null ? this.getProductWithId(this.productId).comments.length : 0 
+    }
+  },
   props: {
     productId: {
       type: String,
@@ -19,11 +30,13 @@ export default {
     return {
       currentimg: 0,
       showFancy: false,
-      productData: this.$store.state.Products.data.find(data => data.id === this.productId),
       randomVisitor: Math.random() * (25 - 1) + 1
     };
   },
   methods: {
+    ...mapActions({
+      sepeteEkle:  'Products/sepeteEkle'
+    }),
     updateimg(index) {
       this.currentimg = index;
     },
@@ -34,12 +47,12 @@ export default {
     AddToBasket() {
       var pid=this.productId;
       var count=1;
-      this.$store.commit("Products/sepeteEkle", {pid, count});
+      this.sepeteEkle({pid, count});
       this.showFancy = true;
     },
     getComment(index) {
-      var comments = this.productData.comments;
-      if (comments.length > index) return comments[0];
+      var comments = this.getProductWithId(this.productId).comments;
+      if (comments!=null) return comments[0];
       return {
         date: "",
         time: "",
@@ -215,7 +228,7 @@ export default {
                                           class="owl-lazy img-responsive wrapper-main-slider__image lazy-init"
                                           alt='DELL G315 CORE İ5 10300H 2.5GHZ-8GB RAM-512GB SSD-GTX1650TI 4GB-15.6"W10'
                                           title='DELL G315 CORE İ5 10300H 2.5GHZ-8GB RAM-512GB SSD-GTX1650TI 4GB-15.6"W10'
-                                          :src="productData.images[currentimg]"
+                                          :src="getProductWithId(productId).images[currentimg]"
                                           style="opacity: 1;"
                                         />
                                       </a>
@@ -549,7 +562,7 @@ export default {
                     <!--Vfor ile çoğaltılacak-->
                     <div class="owl-t-container">
                       <button
-                        v-for="(image, index) in productData.images"
+                        v-for="(image, index) in getProductWithId(productId).images"
                         v-bind:key="image"
                         @mouseover="updateimg(index)"
                         class="owl-t-container-item active"
@@ -563,9 +576,9 @@ export default {
               <div class="wrapper-product-brand">
                 <a href="https://www.vatanbilgisayar.com/dell/oyun-bilgisayari">
                   <img
-                    v-bind:src="productData.markalogosu"
-                    :alt="productData.code"
-                    :title="productData.code"
+                    v-bind:src="getProductWithId(productId).markalogosu"
+                    :alt="getProductWithId(productId).code"
+                    :title="getProductWithId(productId).code"
                   />
                   <span></span>
                 </a>
@@ -580,7 +593,7 @@ export default {
                   <ul class="pdetail-property-list">
                     <li
                       data-count="0"
-                      v-for="moreInformation in productData.moreInformation"
+                      v-for="moreInformation in getProductWithId(productId).moreInformation"
                       v-bind:key="moreInformation"
                     >
                       <span class="property-head">{{
@@ -636,7 +649,7 @@ export default {
                             class="score"
                             id="topAverageRank"
                             :style="{
-                              width: (100 * productData.rate) / 5 + '%'
+                              width: (100 * getProductWithId(productId).rate) / 5 + '%'
                             }"
                           ></span>
                         </div>
@@ -645,7 +658,7 @@ export default {
                           onclick="focusTab(&#39;yorumlar&#39;)"
                           class="comment-count"
                         >
-                          <span>({{ productData.comments.length }})</span>
+                          <span>({{commentsLength }})</span>
                         </a>
                       </div>
 
@@ -653,13 +666,13 @@ export default {
                         class="product-list__product-code pull-left"
                         data-productcode="G315-4B30W85C"
                       >
-                        {{ productData.code }} / {{ productData.id }}
+                        {{ getProductWithId(productId).code }} / {{ getProductWithId(productId).id }}
                       </div>
                     </div>
 
                     <div class="product-list__content product-detail-big-price">
                       <h1 class="product-list__product-name">
-                        {{ productData.name }}
+                        {{ getProductWithId(productId).name }}
                       </h1>
 
                       <div class="product-list__cost product-list__description">
@@ -667,7 +680,7 @@ export default {
                           class="product-list_explanation product-list__description-text"
                         ></h3>
                         <span class="product-list__price">{{
-                          formatPrice(productData.cost)
+                          formatPrice(getProductWithId(productId).cost)
                         }}</span>
                         <span class="product-list__currency">TL</span>
                       </div>
@@ -678,8 +691,8 @@ export default {
                           ><b
                             >{{
                               formatPrice(
-                                productData.cost /
-                                  productData.maxInstallmentCount
+                                getProductWithId(productId).cost /
+                                  getProductWithId(productId).maxInstallmentCount
                               )
                             }}
                             TL</b
@@ -892,7 +905,7 @@ export default {
                     <!--SORUN YARATAN CLASS-->
                     <div
                       class="discount-prod-detail best-comment-view"
-                      v-show="productData.comments"
+                      v-show="getProductWithId(productId).comments"
                     >
                       <div style="text-align: left">
                         <div class="wrapper-star comment-star">
@@ -902,7 +915,7 @@ export default {
                                 class="score"
                                 id="topAverageRank"
                                 :style="{
-                                  width: (100 * productData.rate) / 5 + '%'
+                                  width: (100 * getProductWithId(productId).rate) / 5 + '%'
                                 }"
                               ></span>
                             </div>
@@ -930,7 +943,7 @@ export default {
                           >
                             <strong class="text-danger"
                               >Tüm Yorumlar ({{
-                                productData.comments.length
+                                commentsLength
                               }})</strong
                             >
                           </a>

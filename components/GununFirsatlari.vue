@@ -41,26 +41,24 @@
 </template>
 <script>
 import Zeki from "@/components/Zeki";
+import {mapGetters} from "vuex";
 import ProductButton from "@/components/TheProductButton";
 export default {
   components: {
     Zeki,
     ProductButton
   },
-
-  data() {
-    return {
-      productsData: this.$store.state.Products.data
-    };
+  computed: {
+    ...mapGetters({
+      Products: "Products/Products"
+    }),
   },
-
-  computed: {},
   methods: {
     getProductID(index) {
-      return this.productsData[index].id;
+      return this.Products()[index].id;
     },
     getMaxAvailableListCount(number) {
-      if (this.productsData.length < number) return this.productsData.length;
+      if (this.Products().length < number) return this.Products().length;
       return number;
     }
   }

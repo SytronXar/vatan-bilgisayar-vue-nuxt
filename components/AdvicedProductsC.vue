@@ -1,6 +1,7 @@
 <script>
 // @ is an alias to /src
 import AdvicedProductsButton from "@/components/AdvicedProductsButton";
+import { mapGetters } from "vuex";
 export default {
   name: "UrunSayfasi",
   components: {
@@ -12,11 +13,15 @@ export default {
       required: true
     }
   },
+  computed:{
+    ...mapGetters({
+      getProductWithId: "Products/getProductWithId"
+    }),
+  },
   data() {
     return {
       currentimg: 0,
-      showFancy: false,
-      productData: this.$store.state.Products.data.find(data => data.id === this.productId)
+      showFancy: false
     };
   },
   methods: {
@@ -31,8 +36,8 @@ export default {
       this.showFancy = true;
     },
     getComment(index) {
-      var comments = this.productData.comments;
-      if (comments.length > index) return comments[0];
+      var comments = this.getProductWithId(this.productId).comments;
+      if (comments!=null) return comments[0];
       return {
         date: "",
         time: "",
@@ -53,7 +58,7 @@ export default {
 };
 </script>
 <template>
-  <div class="discount-prod-detail" v-show="productData.advicedProducts.length>0">
+  <div class="discount-prod-detail" v-show="getProductWithId(productId).advicedProducts!=null">
     <div class="discount-text clearfix">
       <span class="icon-discount-tag"><i class="fas fa-tag"></i></span>
       <span class="icon-discount-tag2"><i class="fas fa-percent"></i></span>
@@ -61,7 +66,7 @@ export default {
     </div>
     <div class="discount-item-wrapper">
       <!-- V-for çevirdiğimiz yer -->
-      <AdvicedProductsButton :productId="pid"  v-for="pid in productData.advicedProducts"
+      <AdvicedProductsButton :productId="pid"  v-for="pid in getProductWithId(productId).advicedProducts"
         :key="pid"/>
     </div>
     <div class="text-center">

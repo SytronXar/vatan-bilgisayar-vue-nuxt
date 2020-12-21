@@ -29,12 +29,24 @@ export default {
     FastShippingAd,
     BottomOfPage,
   },
-  methods: {},
+  data(){
+    return{
+      title:""
+    }
+  },
   mounted() {
     document.addEventListener("dragstart", (e) => {
       if (e.target.tagName === "IMG") {
         e.preventDefault();
       }
+    });
+    document.addEventListener('blur', ()=>{
+      this.title=document.title
+      document.title="Fırsatları kaçırma, buraya bak :)"
+      console.log("başlık değişti")
+    });
+    document.addEventListener('focus',()=>{
+      document.title=this.title
     });
   },
 };

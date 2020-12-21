@@ -1,6 +1,6 @@
 <script>
-import Products from "@/store/Products";
 import BasketCartTableRow from "@/components/BasketCartTableRow";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: { BasketCartTableRow },
   data() {
@@ -8,23 +8,20 @@ export default {
     };
   },
   computed:{
+    ...mapGetters({
+      Products: "Products/Products",
+      Cart: "Products/Cart",
+    }),
     GetTotal() {
       var total = 0;
-      this.Cart.forEach(cartItem => {
+      this.Cart().forEach(cartItem => {
         total =
           total +
-          this.Products.find(data => data.id === cartItem.pid).cost *
+          this.Products().find(data => data.id === cartItem.pid).cost *
             cartItem.count;
       });
       return total;
-    },
-    Products(){
-      return this.$store.state.Products.data
-    },
-    Cart(){
-      return this.$store.state.Products.inCart
     }
-    
   },
   methods: {
     formatPrice(value) {
@@ -33,10 +30,10 @@ export default {
     },
     OnItemCountChanged(...args){
       const [cartCount,productId] =args
-      this.Cart.find(data => data.pid === productId).count+=cartCount;
+      this.Cart().find(data => data.pid === productId).count+=cartCount;
     },
     onItemRemoved(index){
-      this.Cart.splice(index, 1);
+      this.Cart().splice(index, 1);
     }
   }
 };
@@ -73,7 +70,7 @@ export default {
           <BasketCartTableRow
             :cartId="cartItem.id"
             :index="index"
-            v-for="(cartItem, index) in Cart"
+            v-for="(cartItem, index) in Cart()"
             :key="cartItem.id"
           />
         </div>

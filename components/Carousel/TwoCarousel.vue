@@ -4,7 +4,7 @@ import TwoCarouselButton from "@/components/Carousel/TwoCarouselButton";
 import CarouselDot from "@/components/Carousel/CarouselDot";
 export default {
   props: {
-    Message: {
+    message: {
       type: String,
       required: true
     }
@@ -111,7 +111,7 @@ export default {
   <div class="wrapper-product wrapper-product--dark wrapper-product--limited">
     <div class="global-container">
       <div class="global-component-header clearfix">
-        <h3 class="global-component-header__title">{{Message}}</h3>
+        <h3 class="global-component-header__title">{{message}}</h3>
       </div>
       <div class="owl-carousel owl-carousel-two owl-theme owl-loaded owl-drag" :class="{ 'owl-grab': owlGrab }">
         <div class="owl-stage-outer" @mousedown="StartGrab">

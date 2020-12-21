@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
-          <h4>{{ Message }}</h4>
+          <h4>{{ message }}</h4>
         </div>
         <div class="col-xs-12">
           <div
@@ -71,7 +71,7 @@ import FancyCarouselButton from "@/components/Carousel/FancyCarousel/FancyCarous
 import CarouselDot from "@/components/Carousel/CarouselDot";
 export default {
   props: {
-    Message: {
+    message: {
       type: String,
       required: true
     }

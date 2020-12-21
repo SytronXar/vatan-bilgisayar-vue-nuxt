@@ -4,7 +4,7 @@ import FiveCarouselButton from "@/components/Carousel/FiveCarouselButton";
 import CarouselDot from "@/components/Carousel/CarouselDot";
 export default {
   props: {
-    Message: {
+    message: {
       type: String,
       required: true
     }
@@ -118,7 +118,7 @@ export default {
         <h3
           class="global-component-header__title global-component-header--small-gutter__title"
         >
-          {{ Message }}
+          {{ message }}
         </h3>
       </div>
       <div

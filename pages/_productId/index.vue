@@ -4,6 +4,7 @@
 import Comments from "@/components/Comments";
 import productImagenInfo from "@/components/productImagenInfo";
 import FiveCarousel from "@/components/Carousel/FiveCarousel";
+import { mapActions,mapGetters } from "vuex";
 export default {
   name: "ProductPage",
   components: {
@@ -13,25 +14,20 @@ export default {
   },
   head() {
     return {
-      title: this.productData.name,
+      title: this.getProductWithId(this.productId).name,
       //meta taglar sayfa hakkında açıklayıcı bilgiler bulundururlar.
       meta: [
-        { name: "description", content: this.productData.name },
+        { name: "description", content: this.getProductWithId(this.productId) },
       ],
     };
   },
-  computed: {
-    productData() {
-      return this.$store.state.Products.data.find(
-        (data) => data.id === this.productId
-      );
-    },
+  created(){
+    this.fetchProducts()
   },
-  props: {
-    /* productId: {
-      type: String,
-      required: true
-    } */
+  computed: {
+    ...mapGetters({
+      getProductWithId: "Products/getProductWithId"
+    })
   },
   data() {
     return {
@@ -40,6 +36,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+    fetchProducts:  'Products/fetchProducts',
+    }),
     updateimg(index) {
       this.currentimg = index;
     },
@@ -66,25 +65,22 @@ export default {
                   >
                 </li>
                 <li>
-                  <a class="bradcrumb-item">{{ productData.productType }}</a>
+                  <a class="bradcrumb-item">{{ getProductWithId(productId).productType }}</a>
                 </li>
                 <li>
-                  <a class="bradcrumb-item">{{ productData.name }}</a>
+                  <a class="bradcrumb-item">{{ getProductWithId(productId).name }}</a>
                 </li>
                 <li>
-                  <a class="bradcrumb-item">{{ productData.code }}</a>
+                  <a class="bradcrumb-item">{{ getProductWithId(productId).code }}</a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-      <!--UrunBilgileri-->
       <productImagenInfo :productId="productId" />
-      <!-- Carousel -->
       <FiveCarousel :message="'Bu Ürüne Bakanlar Bunlara da Baktı'" />
       <Comments :productId="productId" />
-      <!--Comments buraya gelecek-->
     </main>
   </body>
 </template>

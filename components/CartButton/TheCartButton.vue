@@ -1,16 +1,24 @@
 <script>
 import CartButtonItem from "@/components/CartButton/TheCartButtonItem";
+import { mapActions,mapGetters } from "vuex";
 export default {
   components: {
     CartButtonItem
   },
   data() {
     return {
-      Alldata:this.$store.state.Products,
-      productsData: this.$store.state.Products.data,
-      Cart: this.$store.state.Products.inCart,
       dropdownOpen: false
     };
+  },
+  created(){
+    this.fetchProducts()
+    this.fetchCartItems()
+  },
+  computed:{
+    ...mapGetters({
+      Products: "Products/Products",
+      Cart: "Products/Cart",
+    }),
   },
   methods: {
     formatPrice(value) {
@@ -25,16 +33,18 @@ export default {
     },
     GetTotal() {
       var total = 0;
-      this.Cart.forEach(cartItem => {
-        total =
-          total +
-          this.productsData.find(data => data.id === cartItem.pid).cost*cartItem.count;
+      this.Cart().forEach(cartItem => {
+        total +=this.Products().find(data => data.id === cartItem.pid).cost*cartItem.count;
       });
       return total;
     },
     goToCart(){
       this.$router.push({ name: 'CartPage' })
-    }
+    },
+    ...mapActions({
+    fetchProducts:  'Products/fetchProducts',
+    fetchCartItems: 'Products/fetchCartItems'
+    }),
   }
 };
 </script>
@@ -45,7 +55,7 @@ export default {
     @mouseenter="OpenDropdown"
     @mouseleave="CloseDropdown"
   >
-    <NuxtLink to="sepet/sepetim"
+    <NuxtLink :to="{name: 'sepet-sepetim'}"
       type="button"
       id="btnMyBasket"
       class="btn btn-primary btn-basket dropdown-toggle"
@@ -55,16 +65,16 @@ export default {
     >
       <span class="icon-shopping-card"></span>
       <span class="btn-basket--text">SEPETİM</span>
-      <span class="btn-basket--count">{{Cart.length}}</span>
+      <span class="btn-basket--count">{{Cart().length}}</span>
     </NuxtLink>
     <ul class="dropdown-menu dropdown-menu-basket openBasket">
       <div class="basket-lists">
-        <span class="nothing-prod-in-basket" v-show="Cart.length<1">Sepetinizde Ürün Bulunmamaktadır.</span>
+        <span class="nothing-prod-in-basket" v-show="Cart().length<1">Sepetinizde Ürün Bulunmamaktadır.</span>
         <li
           id="16453018"
           class="test"
           data-count="1"
-          v-for="cartItem in Cart"
+          v-for="cartItem in Cart()"
           :key="cartItem.id"
         >
           <CartButtonItem :CartId="cartItem.id" :pId="cartItem.pid" />

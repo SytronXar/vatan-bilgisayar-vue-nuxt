@@ -1,4 +1,5 @@
 <script>
+import { mapActions,mapGetters } from "vuex";
 export default {
   props: {
     cartId: {
@@ -16,14 +17,20 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     changeCount(number) {
-      this.inCart[this.index].count += number;
+      //this.inCart[this.index].count += number;
+      this.changeCountCart({id:this.cartId,count:number})
     },
     DeleteCartItem() {
-      this.inCart.splice(this.index, 1);
+      //this.inCart.splice(this.index, 1);
+      this.deleteCart(this.cartId)
     },
     ProductHref() {
       return this.product.name.toLowerCase().replace(/\s/g, "-");
     },
+    ...mapActions({
+    deleteCart:  'Products/deleteCart',
+    changeCountCart: 'Products/changeCountCart'
+    }),
   },
   data() {
     return {};
