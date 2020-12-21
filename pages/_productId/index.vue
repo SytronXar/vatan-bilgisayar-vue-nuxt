@@ -14,14 +14,19 @@ export default {
   },
   head() {
     return {
-      title: this.getProductWithId(this.productId).name,
+      /* title: this.getProductWithId(this.productId).name,
       //meta taglar sayfa hakkında açıklayıcı bilgiler bulundururlar.
       meta: [
-        { name: "description", content: this.getProductWithId(this.productId) },
-      ],
+        { name: "description",  content: this.getProductWithId(this.productId).name },
+      ], */
     };
   },
   created(){
+    console.log("productId eşittir :" + this.productId)
+    //console.log("nullmu?="+this.getProductWithId(this.productId)!=null?"null değil":"null")
+    //console.log(this.$store.state.Products.data.find(data => data.id === this.productId).name)
+  },
+  beforeMount(){
     this.fetchProducts()
   },
   computed: {
@@ -33,6 +38,7 @@ export default {
     return {
       productId: this.$route.params.productId,
       currentimg: 0,
+      productData:{}
     };
   },
   methods: {
@@ -50,8 +56,9 @@ export default {
 </script>
 <template>
   <body class="has-top-banner" tabindex="0">
-    <main>
-      <input type="hidden" id="visilabs-categoryId" value="notebook" />
+    <div v-if="!this.getProductWithId(this.productId)">Loading Please wait...</div>
+    <main v-else>
+      <input type="hidden" id="visilabs-categoryId" value="notebook"  />
       <div class="wrapper-breadcrumb">
         <div class="global-container">
           <div class="row">
@@ -78,9 +85,9 @@ export default {
           </div>
         </div>
       </div>
-      <productImagenInfo :productId="productId" />
+      <productImagenInfo :productId="productId" /> 
       <FiveCarousel :message="'Bu Ürüne Bakanlar Bunlara da Baktı'" />
-      <Comments :productId="productId" />
+      <Comments :productId="productId" /> 
     </main>
   </body>
 </template>
