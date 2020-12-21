@@ -215,7 +215,7 @@ export const actions = {
     var nCount = id_count.count + item.count
     var key=item.key
     if (nCount<=0) {
-      dispatch('deleteCart',id)
+      //dispatch('deleteCart',id)
     } else {
       ref.child(key).update({
         count:nCount
