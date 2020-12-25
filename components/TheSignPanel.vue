@@ -28,7 +28,7 @@ export default {
     return {
       email: "",
       password: "",
-      showPassword: false,
+      showPassword: true,
       isloggedIn: false
     };
   },
