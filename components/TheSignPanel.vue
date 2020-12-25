@@ -2,6 +2,15 @@
 import PasswordInput from "@/components/ThePasswordInput";
 import firebase from "firebase";
 export default {
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    });
+  },
   name: "login",
   data: function() {
     return {};
@@ -20,6 +29,7 @@ export default {
       email: "",
       password: "",
       showPassword: false,
+      isloggedIn: false
     };
   },
   methods: {
@@ -67,14 +77,8 @@ export default {
             <nuxt-link
               :to="{
                 name: 'login-signstate',
-                params: {
-                  openLogin: true,
-                  loginhref: 'signin'
-                }
+                params: { openLogin: true, signstate: 'signin' }
               }"
-              id="signin"
-              data-toggle="tab"
-              :aria-expanded="openLogin === true"
               >Giriş Yap</nuxt-link
             >
           </li>
@@ -84,12 +88,9 @@ export default {
                 name: 'login-signstate',
                 params: {
                   openLogin: false,
-                  loginhref: 'signup'
+                  signstate: 'signup'
                 }
               }"
-              id="signup"
-              data-toggle="tab"
-              :aria-expanded="openLogin === false"
               >Üye Ol</nuxt-link
             >
           </li>

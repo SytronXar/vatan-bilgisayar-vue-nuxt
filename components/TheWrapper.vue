@@ -53,7 +53,7 @@
                     <!-- v-show="parent_open && loginStatus === true" -->
                     <ul
                       class="dropdown-menu dropdown-menu-home account"
-                      v-show="parent_open && isLoggedIn=== false"
+                      v-show="parent_open && isLoggedIn === true"
                     >
                       <li><a href="/uyeBilgi/uyeBilgi">Üyeliğim</a></li>
                       <li><a href="/uyeBilgi/siparistakip">Siparişlerim</a></li>
@@ -63,20 +63,18 @@
                       <li><a href="/uyeBilgi/uyeAdres">Adres Bilgilerim</a></li>
                       <li><a href="/uyeBilgi/mesaj">Mesajlarım</a></li>
                       <li v-on:click="logout">
-                        <a          
-                          >ÇIKIŞ <span class="icon-door-open"></span
-                        ></a>
+                        <a>ÇIKIŞ <span class="icon-door-open"></span></a>
                       </li>
                     </ul>
                     <ul
                       class="dropdown-menu dropdown-menu-home login"
-                      v-show="parent_open && loginStatus === false"
+                      v-show="parent_open && isLoggedIn === false"
                     >
                       <li>
                         <nuxt-link
                           :to="{
                             name: 'login-signstate',
-                            params: { openLogin: true, signstate: 'signin' },
+                            params: { openLogin: true, signstate: 'signin' }
                           }"
                           >Giriş Yap</nuxt-link
                         >
@@ -87,8 +85,8 @@
                             name: 'login-signstate',
                             params: {
                               openLogin: false,
-                              signstate: 'signup',
-                            },
+                              signstate: 'signup'
+                            }
                           }"
                           >Üye Ol</nuxt-link
                         >
@@ -122,11 +120,21 @@
 import TheTopBar from "@/components/TheTopBar";
 import CartButton from "@/components/CartButton/TheCartButton";
 import LoginData from "@/store/LoginData";
-import firebase from 'firebase';
+import firebase from "firebase";
 export default {
+  created(){
+    firebase.auth().onAuthStateChanged(user=>{
+      if(user){
+        this.isLoggedIn = true;
+      }
+      else{
+        this.isLoggedIn = false;
+      }
+    })
+  },
   components: {
     TheTopBar,
-    CartButton,
+    CartButton
   },
   computed: {},
   props: {},
@@ -134,14 +142,21 @@ export default {
     return {
       loginStatus: LoginData.loginStatus,
       isLoggedIn: false,
-      currentUser:false
+      currentUser: false
     };
   },
   methods: {
-    logout: function() {
-      firebase.auth().signOut().then(() => {
-        this.$router.push('/login/signin')
-      })
+    async logout() {
+      try {
+        const data = await firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            this.$router.push("/login/signin");
+          });
+      } catch (err) {
+        console.log(err);
+      }
     },
     OpenDropdown(event) {
       var Target = event.target;
@@ -156,7 +171,7 @@ export default {
     parent_open(event) {
       var Target = event.target;
       return Target.parentElement.classList.contains("open");
-    },
+    }
   },
 };
 </script>
