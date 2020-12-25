@@ -14,25 +14,29 @@ export default {
   },
   head() {
     return {
-      title: this.getProductWithId(this.productId).name,
+      title: this.getTitle,
       //meta taglar sayfa hakkında açıklayıcı bilgiler bulundururlar.
       meta: [
-        { name: "description", content: this.getProductWithId(this.productId) },
-      ],
+        { name: "description",  content: this.getTitle,},
+      ], 
     };
   },
-  created(){
+  beforeMount(){
     this.fetchProducts()
   },
   computed: {
     ...mapGetters({
       getProductWithId: "Products/getProductWithId"
-    })
+    }),
+    getTitle(){
+      return !this.getProductWithId(this.productId)? "Vatan Bilgisayar" : this.getProductWithId(this.productId).name
+    }
   },
   data() {
     return {
       productId: this.$route.params.productId,
       currentimg: 0,
+      productData:{}
     };
   },
   methods: {
@@ -50,8 +54,11 @@ export default {
 </script>
 <template>
   <body class="has-top-banner" tabindex="0">
-    <main>
-      <input type="hidden" id="visilabs-categoryId" value="notebook" />
+    <div class="deneme" v-if="!this.getProductWithId(this.productId)">
+      <img  src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif" alt="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif">
+    </div>
+    <main v-else>
+      <input type="hidden" id="visilabs-categoryId" value="notebook"  />
       <div class="wrapper-breadcrumb">
         <div class="global-container">
           <div class="row">
@@ -78,9 +85,9 @@ export default {
           </div>
         </div>
       </div>
-      <productImagenInfo :productId="productId" />
+      <productImagenInfo :productId="productId" /> 
       <FiveCarousel :message="'Bu Ürüne Bakanlar Bunlara da Baktı'" />
-      <Comments :productId="productId" />
+      <Comments :productId="productId" /> 
     </main>
   </body>
 </template>

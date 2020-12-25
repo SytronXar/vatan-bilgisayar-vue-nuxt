@@ -19,7 +19,6 @@ export default {
     },
     ProductHref() {
       var href=this.productData.name.toLowerCase().replace(/\s/g, "-");
-      console.log(href)
       return href
     }
   }
