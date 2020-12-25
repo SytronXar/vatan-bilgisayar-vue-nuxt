@@ -1,6 +1,11 @@
 <script>
 import PasswordInput from "@/components/ThePasswordInput";
+import firebase from "firebase";
 export default {
+  name: "login",
+  data: function() {
+    return {};
+  },
   components: {
     PasswordInput
   },
@@ -12,13 +17,43 @@ export default {
   },
   data() {
     return {
-      e_mail_input: "",
-      password_input: ""
+      email: "",
+      password: "",
+      showPassword: false,
     };
   },
   methods: {
-    login() {
-      console.log(this.e_mail_input + "  " + this.password_input);
+    register: function(e) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+            alert("Hesap " + this.email + " başarıyla oluşturuldu");
+            this.$router.push("/");
+          },
+          err => {
+            alert(err.message);
+          }
+        );
+
+      e.preventDefault();
+    },
+    login: function(e) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+            alert(this.email + " ile giriş yaptınız");
+            this.$router.push("/");
+          },
+          err => {
+            alert(err.message);
+          }
+        );
+
+      e.preventDefault();
     }
   }
 };
@@ -26,12 +61,12 @@ export default {
 <template>
   <main class="signup basket-signup clear-singin">
     <div class="clearfix">
-      <div id="signup-form-container" class=" signup-form">
+      <div id="signup-form-container" class="signup-form">
         <ul class="nav" id="loginTab">
           <li :class="{ active: openLogin === true }">
-            <router-link
+            <nuxt-link
               :to="{
-                name: 'LoginPage',
+                name: 'login-signstate',
                 params: {
                   openLogin: true,
                   loginhref: 'signin'
@@ -40,13 +75,13 @@ export default {
               id="signin"
               data-toggle="tab"
               :aria-expanded="openLogin === true"
-              >Giriş Yap</router-link
+              >Giriş Yap</nuxt-link
             >
           </li>
           <li :class="{ active: openLogin === false }">
-            <router-link
+            <nuxt-link
               :to="{
-                name: 'LoginPage',
+                name: 'login-signstate',
                 params: {
                   openLogin: false,
                   loginhref: 'signup'
@@ -55,13 +90,13 @@ export default {
               id="signup"
               data-toggle="tab"
               :aria-expanded="openLogin === false"
-              >Üye Ol</router-link
+              >Üye Ol</nuxt-link
             >
           </li>
         </ul>
         <div class="tab-content">
           <div
-            class="tab-pane collapse fade "
+            class="tab-pane collapse fade"
             :class="{ 'active in': openLogin === true }"
             id="signin-section"
           >
@@ -79,6 +114,7 @@ export default {
                 value="gbAHXuwnjQKPJ_WYqrg-4L5dda4-n2F_720137md34MZdsnrkhPs6AOi0ipTtQmiGxE718vf4Edd7hiHU9YuBwZlLFU1"
               />
               <div class="form-group">
+                <!--Email-->
                 <label for="">E-mail</label>
                 <input
                   class="form-control email-input text-box single-line"
@@ -93,7 +129,8 @@ export default {
                   placeholder="ad.soyad@example.com"
                   type="email"
                   value=""
-                  v-mode.lazy="e_mail_input"
+                  v-model="email"
+                  v-mode.lazy="email"
                 />
                 <span
                   class="field-validation-valid text-danger"
@@ -104,7 +141,34 @@ export default {
               </div>
               <div class="form-group">
                 <label for="">Şifre</label>
-                <PasswordInput v-model="password_input" />
+                <div class="input-group">
+                  <input
+                    data-val="true"
+                    data-val-required="Şifre alanı boş geçilemez"
+                    id="pass"
+                    name="Password"
+                    v-model="password"
+                    placeholder="****"
+                    :type="showPassword ? 'password' : 'text'"
+                    class="form-control"
+                    @input="$emit('change', $event.target.value)"
+                  /><span
+                    data-valmsg-for="Password"
+                    data-valmsg-replace="true"
+                    class="field-validation-valid text-danger"
+                  ></span>
+                  <div class="input-group-addon">
+                    <span
+                      class="toggle-password-visible"
+                      @click="
+                        {
+                          showPassword = !showPassword;
+                        }
+                      "
+                      ><i class="icon-eye-alt"></i
+                    ></span>
+                  </div>
+                </div>
               </div>
               <input
                 type="hidden"
@@ -115,6 +179,7 @@ export default {
               <div class="form-group text-center">
                 <button
                   id="login-button"
+                  v-on:click="login"
                   type="submit"
                   class="btn btn-primary signup-form__button"
                   @click="login"
@@ -159,7 +224,7 @@ export default {
                 type="hidden"
                 value="0Bzg77OdBClXPwRaznZX_4xONEQ1msAdpiEoQWUw3XRk5jCXFrVs6LdH4FpxQkiOFhm4bV3Pf7k_vDb1Do9y6UuHy5M1"
               />
-              <div style="color:red;"></div>
+              <div style="color: red"></div>
               <div class="form-group">
                 <label for="">İsim Soyisim<sup>*</sup></label>
                 <input
@@ -197,6 +262,7 @@ export default {
                   data-val-remote-url="/Account/IsEmailAlreadyExists"
                   data-val-required="E-Mail Adresi alanı boş geçilemez"
                   id="Email"
+                  v-model="email"
                   name="Email"
                   placeholder=""
                   type="email"
@@ -220,6 +286,7 @@ export default {
                       data-val-minlength-min="6"
                       data-val-required="Şifre alanı boş geçilemez"
                       id="Password"
+                      v-model="password"
                       name="Password"
                       placeholder=""
                       type="password"
@@ -266,7 +333,7 @@ export default {
                 value="03AGdBq24ZvTSTNyoEQoj7vLJs1qQoinpKK_9qpwdzKEn6QGM2jADZTexIZhJv4g38zuutPvz9dxetUQCP6_kSxLbt6QOTvEmu2GvMFEYypAipr1klO5GIXyPymtbIL58qBUWaNvq-MSDKJRmxpz1N7OQsQ6oZlzDvhap0hECjXMt5HueoViJfTr_PhsWxM8DaSwsqc27HeoOgeeir2_b3bDKzcvzNrv3c8EjNcADawfprhftITFPs-Ii9iQjNKghtWTKeLEzUsNqXPpYhulZtaEw0qGl3Poq1n8_xbzILniOOHXdV6mUVYDjnnZUOBVTnomS6z7wJf3_OI9UtBRExlJQ8s-9Zhoa5jlHzbkW8AAXLqYFtUUb88brzxxKPpFKggljJdYX7eY1uYrbNCH_w9418xGqlT4D_YDhott0ZilFgKkbiMvoCK_w"
               />
               <div class="form-group">
-                <div style="color:red;"></div>
+                <div style="color: red"></div>
               </div>
               <div class="form-group">
                 <div>
@@ -299,14 +366,14 @@ export default {
                 <a
                   href="/kisisel-verilerin-korunmasi"
                   target="_blank"
-                  class=" btn-link"
+                  class="btn-link"
                   >tıklayınız.</a
                 >
                 <br />
                 Gönder butonuna basarak
                 <a
                   href="#"
-                  class=" btn-link button-acik-riza-metni"
+                  class="btn-link button-acik-riza-metni"
                   data-original-title=""
                   title=""
                   >Açık Rıza Metnini</a
@@ -315,6 +382,7 @@ export default {
               </div>
               <div class="form-group text-center">
                 <button
+                  v-on:click="register"
                   type="submit"
                   class="btn btn-primary signup-form__button"
                 >

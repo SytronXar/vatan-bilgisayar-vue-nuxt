@@ -50,9 +50,10 @@
                       <span class="icon-user"></span>
                       <span id="type">GİRİŞ</span>
                     </button>
+                    <!-- v-show="parent_open && loginStatus === true" -->
                     <ul
                       class="dropdown-menu dropdown-menu-home account"
-                      v-show="parent_open && loginStatus === true"
+                      v-show="parent_open && isLoggedIn=== false"
                     >
                       <li><a href="/uyeBilgi/uyeBilgi">Üyeliğim</a></li>
                       <li><a href="/uyeBilgi/siparistakip">Siparişlerim</a></li>
@@ -61,9 +62,8 @@
                       </li>
                       <li><a href="/uyeBilgi/uyeAdres">Adres Bilgilerim</a></li>
                       <li><a href="/uyeBilgi/mesaj">Mesajlarım</a></li>
-                      <li>
-                        <a
-                          href="/MemberTransaction/Logout?returnUrl=%2F&amp;logtab=signup"
+                      <li v-on:click="logout">
+                        <a          
                           >ÇIKIŞ <span class="icon-door-open"></span
                         ></a>
                       </li>
@@ -122,6 +122,7 @@
 import TheTopBar from "@/components/TheTopBar";
 import CartButton from "@/components/CartButton/TheCartButton";
 import LoginData from "@/store/LoginData";
+import firebase from 'firebase';
 export default {
   components: {
     TheTopBar,
@@ -132,9 +133,16 @@ export default {
   data() {
     return {
       loginStatus: LoginData.loginStatus,
+      isLoggedIn: false,
+      currentUser:false
     };
   },
   methods: {
+    logout: function() {
+      firebase.auth().signOut().then(() => {
+        this.$router.push('/login/signin')
+      })
+    },
     OpenDropdown(event) {
       var Target = event.target;
       Target.setAttribute("aria-expanded", false);

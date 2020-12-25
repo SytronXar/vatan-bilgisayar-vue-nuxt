@@ -3,17 +3,19 @@
 import Products from "@/store/Products";
 import AdvicedProductsC from "@/components/AdvicedProductsC";
 import TheFancyBoxContainer from "@/components/TheFancyBoxContainer";
-import { mapGetters,mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapGetters({
       getProductWithId: "Products/getProductWithId"
     }),
-    productData(){
-      this.getProductWithId(this.productId)
+    productData() {
+      this.getProductWithId(this.productId);
     },
-    commentsLength(){
-      return this.getProductWithId(this.productId).comments!=null ? this.getProductWithId(this.productId).comments.length : 0 
+    commentsLength() {
+      return this.getProductWithId(this.productId).comments != null
+        ? this.getProductWithId(this.productId).comments.length
+        : 0;
     }
   },
   props: {
@@ -35,7 +37,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      sepeteEkle:  'Products/sepeteEkle'
+      sepeteEkle: "Products/sepeteEkle"
     }),
     updateimg(index) {
       this.currentimg = index;
@@ -45,14 +47,14 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     AddToBasket() {
-      var pid=this.productId;
-      var count=1;
-      this.sepeteEkle({pid, count});
+      var pid = this.productId;
+      var count = 1;
+      this.sepeteEkle({ pid, count });
       this.showFancy = true;
     },
     getComment(index) {
       var comments = this.getProductWithId(this.productId).comments;
-      if (comments!=null) return comments[0];
+      if (comments != null) return comments[0];
       return {
         date: "",
         time: "",
@@ -228,7 +230,11 @@ export default {
                                           class="owl-lazy img-responsive wrapper-main-slider__image lazy-init"
                                           alt='DELL G315 CORE İ5 10300H 2.5GHZ-8GB RAM-512GB SSD-GTX1650TI 4GB-15.6"W10'
                                           title='DELL G315 CORE İ5 10300H 2.5GHZ-8GB RAM-512GB SSD-GTX1650TI 4GB-15.6"W10'
-                                          :src="getProductWithId(productId).images[currentimg]"
+                                          :src="
+                                            getProductWithId(productId).images[
+                                              currentimg
+                                            ]
+                                          "
                                           style="opacity: 1;"
                                         />
                                       </a>
@@ -562,7 +568,8 @@ export default {
                     <!--Vfor ile çoğaltılacak-->
                     <div class="owl-t-container">
                       <button
-                        v-for="(image, index) in getProductWithId(productId).images"
+                        v-for="(image, index) in getProductWithId(productId)
+                          .images"
                         v-bind:key="image"
                         @mouseover="updateimg(index)"
                         class="owl-t-container-item active"
@@ -593,7 +600,8 @@ export default {
                   <ul class="pdetail-property-list">
                     <li
                       data-count="0"
-                      v-for="moreInformation in getProductWithId(productId).moreInformation"
+                      v-for="moreInformation in getProductWithId(productId)
+                        .moreInformation"
                       v-bind:key="moreInformation"
                     >
                       <span class="property-head">{{
@@ -649,7 +657,9 @@ export default {
                             class="score"
                             id="topAverageRank"
                             :style="{
-                              width: (100 * getProductWithId(productId).rate) / 5 + '%'
+                              width:
+                                (100 * getProductWithId(productId).rate) / 5 +
+                                '%'
                             }"
                           ></span>
                         </div>
@@ -658,7 +668,7 @@ export default {
                           onclick="focusTab(&#39;yorumlar&#39;)"
                           class="comment-count"
                         >
-                          <span>({{commentsLength }})</span>
+                          <span>({{ commentsLength }})</span>
                         </a>
                       </div>
 
@@ -666,7 +676,8 @@ export default {
                         class="product-list__product-code pull-left"
                         data-productcode="G315-4B30W85C"
                       >
-                        {{ getProductWithId(productId).code }} / {{ getProductWithId(productId).id }}
+                        {{ getProductWithId(productId).code }} /
+                        {{ getProductWithId(productId).id }}
                       </div>
                     </div>
 
@@ -692,7 +703,8 @@ export default {
                             >{{
                               formatPrice(
                                 getProductWithId(productId).cost /
-                                  getProductWithId(productId).maxInstallmentCount
+                                  getProductWithId(productId)
+                                    .maxInstallmentCount
                               )
                             }}
                             TL</b
@@ -915,7 +927,10 @@ export default {
                                 class="score"
                                 id="topAverageRank"
                                 :style="{
-                                  width: (100 * getProductWithId(productId).rate) / 5 + '%'
+                                  width:
+                                    (100 * getProductWithId(productId).rate) /
+                                      5 +
+                                    '%'
                                 }"
                               ></span>
                             </div>
@@ -942,9 +957,7 @@ export default {
                             onclick="focusTab(&#39;yorumlar&#39;)"
                           >
                             <strong class="text-danger"
-                              >Tüm Yorumlar ({{
-                                commentsLength
-                              }})</strong
+                              >Tüm Yorumlar ({{ commentsLength }})</strong
                             >
                           </a>
                         </div>
