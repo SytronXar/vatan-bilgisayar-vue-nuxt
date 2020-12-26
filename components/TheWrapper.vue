@@ -46,9 +46,10 @@
                       aria-expanded="true"
                       @focus="OpenDropdown"
                       @blur="CloseDropdown"
+                      @mouseover="getUserdata()"
                     >
                       <span class="icon-user"></span>
-                      <span id="type">GİRİŞ</span>
+                      <span id="type">{{dropbarName}}</span>
                     </button>
                     <!-- v-show="parent_open && loginStatus === true" -->
                     <ul
@@ -56,6 +57,9 @@
                       v-show="parent_open && isLoggedIn === true"
                     >
                       <li><a href="/uyeBilgi/uyeBilgi">Üyeliğim</a></li>
+                      <li>
+                        <a>{{ mailim + " " + name }}</a>
+                      </li>
                       <li><a href="/uyeBilgi/siparistakip">Siparişlerim</a></li>
                       <li>
                         <a href="/uyeBilgi/favorilistem">Favori Ürünlerim</a>
@@ -122,15 +126,16 @@ import CartButton from "@/components/CartButton/TheCartButton";
 import LoginData from "@/store/LoginData";
 import firebase from "firebase";
 export default {
-  created(){
-    firebase.auth().onAuthStateChanged(user=>{
-      if(user){
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
         this.isLoggedIn = true;
-      }
-      else{
+        this.dropbarName = "HESABIM";
+      } else {
         this.isLoggedIn = false;
+        this.dropbarName = "GİRİŞ";
       }
-    })
+    });
   },
   components: {
     TheTopBar,
@@ -142,7 +147,10 @@ export default {
     return {
       loginStatus: LoginData.loginStatus,
       isLoggedIn: false,
-      currentUser: false
+      currentUser: false,
+      name: "",
+      mailim: "",
+      dropbarName: "GİRİŞ",
     };
   },
   methods: {
@@ -156,6 +164,15 @@ export default {
           });
       } catch (err) {
         console.log(err);
+      }
+    },
+    getUserdata() {
+      // Kullanıcı verilerini çekiyoruz.
+      if (this.isLoggedIn) {
+        // kullanici diye bir variable tanımladık. Email ile ismi çektik.
+        var kullanici = firebase.auth().currentUser;
+        this.mailim = kullanici.email;
+        this.name = kullanici.displayName;
       }
     },
     OpenDropdown(event) {
@@ -172,6 +189,6 @@ export default {
       var Target = event.target;
       return Target.parentElement.classList.contains("open");
     }
-  },
+  }
 };
 </script>

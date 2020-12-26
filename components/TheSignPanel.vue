@@ -28,18 +28,31 @@ export default {
     return {
       email: "",
       password: "",
+      name: "",
+      phone: "",
       showPassword: true,
       isloggedIn: false
     };
   },
   methods: {
+    Updateuser() {},
     register: function(e) {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(
           user => {
+            // Kayıt işlemi sadece email ve şifre ile oluşturuluyor, baştan isim ve numara ekleyemiyoruz.
             alert("Hesap " + this.email + " başarıyla oluşturuldu");
+            // Email ve şifre ile kullanıcı oluşturduktan sonra hesabın isim ve numarasını güncelliyoruz.
+            var kullanici = firebase.auth().currentUser;
+            alert("Kullanıcıya giriş yapıldı");
+            kullanici.updateProfile({
+              displayName: this.name,
+              phoneNumber: this.phone
+            });
+            alert("İsim " + this.name + " güncellendi");
+            alert("Telefon " + this.phone + " güncellendi");
             this.$router.push("/");
           },
           err => {
@@ -237,6 +250,7 @@ export default {
                   data-val-regex-pattern="^\s*([a-zA-ZğüşöçıİĞÜŞÖÇ\.-]{2,})(\s+([a-zA-ZğüşöçıİĞÜŞÖÇ\. -]{2,}))+\s*$"
                   data-val-required="İsim Soyisim alanı boş geçilemez"
                   id="Name"
+                  v-model="name"
                   name="Name"
                   placeholder=""
                   type="name"
@@ -315,6 +329,7 @@ export default {
                   data-val-regex-pattern="^(\+\s?)?((?<!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$"
                   data-val-required="Cep Telefonu alanı boş geçilemez"
                   id="PhoneNumber"
+                  v-model="phone"
                   name="PhoneNumber"
                   placeholder=""
                   type="tel"
