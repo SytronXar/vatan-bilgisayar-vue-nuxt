@@ -5,9 +5,9 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.isLoggedIn = true;
+        this.alreadyLogged = true;
       } else {
-        this.isLoggedIn = false;
+        this.alreadyLogged = false;
       }
     });
   },
@@ -31,7 +31,7 @@ export default {
       name: "",
       phone: "",
       showPassword: true,
-      isloggedIn: false
+      alreadyLogged: false
     };
   },
   methods: {
@@ -83,7 +83,7 @@ export default {
 </script>
 <template>
   <main class="signup basket-signup clear-singin">
-    <div class="clearfix">
+    <div v-if="!alreadyLogged" class="clearfix">
       <div id="signup-form-container" class="signup-form">
         <ul class="nav" id="loginTab">
           <li :class="{ active: openLogin === true }">
@@ -417,5 +417,27 @@ export default {
         </div>
       </div>
     </div>
+    <!--Giriş yapıldıysa-->
+    <div v-if="alreadyLogged" class="row">
+    <div class="col-xs-12">
+      <div class="empty-basket">
+        <div class="empty-basket-content">
+          <span class="icon-website"></span>
+        </div>
+        <h2 style="color: red">Bu sayfaya erişemezsiniz !</h2>
+        <h4>Zaten giriş yapmışsınız.</h4>
+        <img
+          style="width: 640px; height: 512px"
+          src="https://www.freepnglogos.com/uploads/minions-png/minions-png-the-minion-language-despicable-38.png"
+        />
+        <p>Eğer isterseniz Anasayfa'ya geri dönebilirsiniz.</p>
+        <a
+          class="btn btn-primary signup-form__button change-password-form__button"
+          href="/"
+          >ANASAYFA</a
+        >
+      </div>
+    </div>
+  </div>
   </main>
 </template>
