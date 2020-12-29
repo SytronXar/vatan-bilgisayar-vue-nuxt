@@ -58,7 +58,7 @@
                     >
                       <li><a href="/uyeBilgi/uyeBilgi">Üyeliğim</a></li>
                       <li>
-                        <a>{{ mailim + " " + name }}</a>
+                        <a>{{ mailim + " " + name+" "+ uid }}</a>
                       </li>
                       <li><a href="/uyeBilgi/siparistakip">Siparişlerim</a></li>
                       <li>
@@ -125,6 +125,7 @@ import TheTopBar from "@/components/TheTopBar";
 import CartButton from "@/components/CartButton/TheCartButton";
 import LoginData from "@/store/LoginData";
 import firebase from "firebase";
+import { mapActions } from "vuex";
 export default {
   created() {
     firebase.auth().onAuthStateChanged(user => {
@@ -145,27 +146,18 @@ export default {
   props: {},
   data() {
     return {
-      loginStatus: LoginData.loginStatus,
       isLoggedIn: false,
       currentUser: false,
       name: "",
       mailim: "",
       dropbarName: "GİRİŞ",
+      uid:null
     };
   },
   methods: {
-    async logout() {
-      try {
-        const data = await firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            this.$router.push("/login/signin");
-          });
-      } catch (err) {
-        console.log(err);
-      }
-    },
+    ...mapActions({
+      logout: "LoginData/logout"
+    }),
     getUserdata() {
       // Kullanıcı verilerini çekiyoruz.
       if (this.isLoggedIn) {
@@ -173,6 +165,7 @@ export default {
         var kullanici = firebase.auth().currentUser;
         this.mailim = kullanici.email;
         this.name = kullanici.displayName;
+        this.uid=kullanici.uid
       }
     },
     OpenDropdown(event) {

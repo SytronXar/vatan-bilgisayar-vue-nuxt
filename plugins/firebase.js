@@ -1,6 +1,8 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/database'
+import 'firebase/auth'
+
 if (!firebase.apps.length) {
     const config = {
         apiKey: "AIzaSyB3ZWmc85GDTQgaYJYICRCi2AO8u9UAa2Y",
@@ -13,8 +15,9 @@ if (!firebase.apps.length) {
         measurementId: "G-VHDME3X2XG"
     }
     firebase.initializeApp(config)
-    firebase.firestore().settings({timestampsInSnapshots: true})
+    firebase.firestore().settings({ timestampsInSnapshots: true })
 }
 const fireDb = firebase.firestore()
 const realDb = firebase.database()
-export {fireDb, realDb}
+const auth = firebase.auth()
+export { fireDb, realDb,auth }

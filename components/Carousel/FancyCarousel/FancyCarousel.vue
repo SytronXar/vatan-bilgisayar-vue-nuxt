@@ -66,7 +66,6 @@
 </template>
 <script>
 // @ is an alias to /src
-import ProductJs from "@/store/Products";
 import FancyCarouselButton from "@/components/Carousel/FancyCarousel/FancyCarouselButton";
 import CarouselDot from "@/components/Carousel/CarouselDot";
 export default {

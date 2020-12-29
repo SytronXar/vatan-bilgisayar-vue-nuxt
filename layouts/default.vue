@@ -10,7 +10,6 @@
   </div>
 </template>
 <script>
-
 import TheWrapper from "@/components/TheWrapper";
 import CategoryDropbar from "@/components/CategoryDropbar";
 import FastShippingAd from "@/components/FastShippingAd";
@@ -19,8 +18,9 @@ export default {
   head: {
     script: [
       {
-        src:"https://kit.fontawesome.com/ce94c72459.js", crossorigin:"anonymous"
-      }
+        src: "https://kit.fontawesome.com/ce94c72459.js",
+        crossorigin: "anonymous",
+      },
     ],
   },
   components: {
@@ -29,10 +29,10 @@ export default {
     FastShippingAd,
     BottomOfPage,
   },
-  data(){
-    return{
-      title:""
-    }
+  data() {
+    return {
+      title: "",
+    };
   },
   mounted() {
     document.addEventListener("dragstart", (e) => {
@@ -40,13 +40,13 @@ export default {
         e.preventDefault();
       }
     });
-    document.addEventListener('blur', ()=>{
-      this.title=document.title
-      document.title="Fırsatları kaçırma, buraya bak :)"
-      console.log("başlık değişti")
+    document.addEventListener("blur", () => {
+      this.title = document.title;
+      document.title = "Fırsatları kaçırma, buraya bak :)";
+      console.log("başlık değişti");
     });
-    document.addEventListener('focus',()=>{
-      document.title=this.title
+    document.addEventListener("focus", () => {
+      document.title = this.title;
     });
   },
 };

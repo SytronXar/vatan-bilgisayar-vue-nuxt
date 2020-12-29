@@ -1,96 +1,55 @@
 <script>
 import PasswordInput from "@/components/ThePasswordInput";
 import firebase from "firebase";
+import { mapActions } from "vuex";
 export default {
+  name: "login",
   created() {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.alreadyLogged = true;
-      } else {
-        this.alreadyLogged = false;
-      }
+        this.isAlreadyLogged = true;
+        this.$router.push("/"); //Anasayfaya yönlendiriyor giriş yapılmışsa
+      } else this.isAlreadyLogged = false;
     });
   },
-  name: "login",
-  data: function() {
-    return {};
-  },
   components: {
-    PasswordInput
+    PasswordInput,
   },
   props: {
     openLogin: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
+      isAlreadyLogged: false,
       email: "",
       password: "",
       name: "",
       phone: "",
       showPassword: true,
-      alreadyLogged: false
     };
   },
   methods: {
-    Updateuser() {},
-    register: function(e) {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(
-          user => {
-            // Kayıt işlemi sadece email ve şifre ile oluşturuluyor, baştan isim ve numara ekleyemiyoruz.
-            alert("Hesap " + this.email + " başarıyla oluşturuldu");
-            // Email ve şifre ile kullanıcı oluşturduktan sonra hesabın isim ve numarasını güncelliyoruz.
-            var kullanici = firebase.auth().currentUser;
-            alert("Kullanıcıya giriş yapıldı");
-            kullanici.updateProfile({
-              displayName: this.name,
-              phoneNumber: this.phone
-            });
-            alert("İsim " + this.name + " güncellendi");
-            alert("Telefon " + this.phone + " güncellendi");
-            this.$router.push("/");
-          },
-          err => {
-            alert(err.message);
-          }
-        );
-
-      e.preventDefault();
-    },
-    login: function(e) {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(
-          user => {
-            alert(this.email + " ile giriş yaptınız");
-            this.$router.push("/");
-          },
-          err => {
-            alert(err.message);
-          }
-        );
-
-      e.preventDefault();
-    }
-  }
+    ...mapActions({
+      register: "LoginData/register",
+      login: "LoginData/login",
+      updateUser: "LoginData/updateData",
+    }),
+  },
 };
 </script>
 <template>
   <main class="signup basket-signup clear-singin">
-    <div v-if="!alreadyLogged" class="clearfix">
+    <div v-if="!isAlreadyLogged" class="clearfix">
       <div id="signup-form-container" class="signup-form">
         <ul class="nav" id="loginTab">
           <li :class="{ active: openLogin === true }">
             <nuxt-link
               :to="{
                 name: 'login-signstate',
-                params: { openLogin: true, signstate: 'signin' }
+                params: { openLogin: true, signstate: 'signin' },
               }"
               >Giriş Yap</nuxt-link
             >
@@ -101,8 +60,8 @@ export default {
                 name: 'login-signstate',
                 params: {
                   openLogin: false,
-                  signstate: 'signup'
-                }
+                  signstate: 'signup',
+                },
               }"
               >Üye Ol</nuxt-link
             >
@@ -114,8 +73,8 @@ export default {
             :class="{ 'active in': openLogin === true }"
             id="signin-section"
           >
-            <form
-              action="/login?returnUrl=%2F"
+            <!-- burası formdu değiştirdim -->
+            <div
               class="form-horizontal"
               id="loginform"
               method="post"
@@ -144,7 +103,7 @@ export default {
                   type="email"
                   value=""
                   v-model="email"
-                  v-mode.lazy="email"
+                  v-model.lazy="email"
                 />
                 <span
                   class="field-validation-valid text-danger"
@@ -193,10 +152,9 @@ export default {
               <div class="form-group text-center">
                 <button
                   id="login-button"
-                  v-on:click="login"
                   type="submit"
                   class="btn btn-primary signup-form__button"
-                  @click="login"
+                  @click="login({ email, password })"
                 >
                   GİRİŞ YAP
                 </button>
@@ -219,14 +177,14 @@ export default {
                   ><i class="fab fa-facebook-f"></i>FACEBOOK İLE BAĞLAN</a
                 >
               </div>
-            </form>
+            </div>
           </div>
           <div
             class="tab-pane"
             id="signup-section"
             :class="{ 'active in': openLogin === false }"
           >
-            <form
+            <div
               action="/Account/Register?returnUrl=%2F"
               class="form-horizontal"
               method="post"
@@ -398,14 +356,21 @@ export default {
               </div>
               <div class="form-group text-center">
                 <button
-                  v-on:click="register"
+                  v-on:click="
+                    register({
+                      email: email,
+                      password: password,
+                      name: name,
+                      phone: phone,
+                    })
+                  "
                   type="submit"
                   class="btn btn-primary signup-form__button"
                 >
                   GÖNDER
                 </button>
               </div>
-            </form>
+            </div>
           </div>
           <div class="tab-pane collapse fade"></div>
         </div>
@@ -418,26 +383,26 @@ export default {
       </div>
     </div>
     <!--Giriş yapıldıysa-->
-    <div v-if="alreadyLogged" class="row">
-    <div class="col-xs-12">
-      <div class="empty-basket">
-        <div class="empty-basket-content">
-          <span class="icon-website"></span>
+    <div v-if="isAlreadyLogged" class="row">
+      <div class="col-xs-12">
+        <div class="empty-basket">
+          <div class="empty-basket-content">
+            <span class="icon-website"></span>
+          </div>
+          <h2 style="color: red">Bu sayfaya erişemezsiniz !</h2>
+          <h4>Zaten giriş yapmışsınız.</h4>
+          <img
+            style="width: 640px; height: 512px"
+            src="https://www.freepnglogos.com/uploads/minions-png/minions-png-the-minion-language-despicable-38.png"
+          />
+          <p>Eğer isterseniz Anasayfa'ya geri dönebilirsiniz.</p>
+          <a
+            class="btn btn-primary signup-form__button change-password-form__button"
+            href="/"
+            >ANASAYFA</a
+          >
         </div>
-        <h2 style="color: red">Bu sayfaya erişemezsiniz !</h2>
-        <h4>Zaten giriş yapmışsınız.</h4>
-        <img
-          style="width: 640px; height: 512px"
-          src="https://www.freepnglogos.com/uploads/minions-png/minions-png-the-minion-language-despicable-38.png"
-        />
-        <p>Eğer isterseniz Anasayfa'ya geri dönebilirsiniz.</p>
-        <a
-          class="btn btn-primary signup-form__button change-password-form__button"
-          href="/"
-          >ANASAYFA</a
-        >
       </div>
     </div>
-  </div>
   </main>
 </template>

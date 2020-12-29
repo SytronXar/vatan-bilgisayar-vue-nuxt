@@ -1,5 +1,8 @@
-import {realDb} from '~/plugins/firebase.js'
+import { realDb, auth } from '~/plugins/firebase.js';
+import firebase from "firebase";
+
 export const state = () => ({
+  user: {},
   inCart: [],
   categories: [],
   markalar: [],
@@ -20,7 +23,7 @@ export const getters = {
   Products: (state) => () => {
     return state.data
   },
-  Cart: (state) => () => {
+  Cart: (state, getters) => () => {
     return state.inCart
   },
   getProductWithId: (state) => (id) => {
@@ -115,10 +118,14 @@ export const getters = {
   productFilter: (state, getters) => () => {
     state.filteredProductList = getters.fiyatFiltreleriyleArama(getters.kategoriyleArama(getters.markalarlaArama(getters.searchWithPrice(getters.searchWithString(state.data)))));
     return state.filteredProductList;
-  }
+  },
 }
 
 export const actions = {
+
+  setUser({ commit }, item) {
+    commit('setUser', item)
+  },
   sepeteEkle({ commit }, item) {
     commit('sepeteEkle', item)
   },
@@ -149,95 +156,116 @@ export const actions = {
   removeSecilmisFiyat({ commit }, id) {
     commit('removeSecilmisFiyat', id);
   },
-  fetchCartItems ({commit}) {
-    var ref = realDb.ref('inCart')
-    ref.once('value').then(function(snapshot) {
-      let arr =[]
-      if (snapshot.val()!=null) {    
-        arr = Object.entries(snapshot.val()).map(e => Object.assign(e[1], { key: e[0] }))
-      }
-      commit('setInCart', arr)
-    });
-    
+  async fetchCartItems({ commit, state }) {
+    var kullanici = firebase.auth().currentUser
+    var delay = !kullanici ? 500 : 0
+    console.log("delay: " + delay)
+    let arr = []
+    setTimeout(function () {
+      new Promise(resolve => {
+        kullanici = firebase.auth().currentUser
+        commit('setUser', kullanici)
+        resolve(true)
+        console.log(kullanici ? kullanici.uid : "boşşş")
+        var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
+        ref.once('value').then(function (snapshot) {
+          if (snapshot.val() != null) {
+            arr = Object.entries(snapshot.val()).map(e => Object.assign(e[1], { key: e[0] }))
+          }
+          commit('setInCart', arr)
+        });
+      })
+    }, delay)
+    if (!kullanici) {
+      //local storage den çekme kodu
+    }
   },
-  fetchProducts ({commit,dispatch}) {
+  fetchProducts({ commit, dispatch }) {
     dispatch('fetchCategories')
     dispatch('fetchMarkalar')
     var ref = realDb.ref('Products')
-    ref.once('value').then(function(snapshot) {
-      let arr =[]
-      if (snapshot.val()!=null) {    
+    ref.once('value').then(function (snapshot) {
+      let arr = []
+      if (snapshot.val() != null) {
         arr = Object.entries(snapshot.val()).map(e => Object.assign(e[1], { key: e[0] }))
       }
       commit('setProducts', arr)
     });
   },
-  fetchMarkalar ({commit}) {
+  fetchMarkalar({ commit }) {
     var ref = realDb.ref('markalar')
-    ref.once('value').then(function(snapshot) {
-      let arr =[]
-      if (snapshot.val()!=null) {    
-         arr = Object.entries(snapshot.val()).map(e => Object.assign(e[1], { key: e[0] }))
+    ref.once('value').then(function (snapshot) {
+      let arr = []
+      if (snapshot.val() != null) {
+        arr = Object.entries(snapshot.val()).map(e => Object.assign(e[1], { key: e[0] }))
       }
       commit('setMarkalar', arr)
     });
   },
-  fetchCategories ({commit}) {
+  fetchCategories({ commit }) {
     var ref = realDb.ref('categories')
-    ref.once('value').then(function(snapshot) {
-      let arr =[]
-      if (snapshot.val()!=null) {    
-         arr = Object.entries(snapshot.val()).map(e => Object.assign(e[1], { key: e[0] }))
+    ref.once('value').then(function (snapshot) {
+      let arr = []
+      if (snapshot.val() != null) {
+        arr = Object.entries(snapshot.val()).map(e => Object.assign(e[1], { key: e[0] }))
       }
       commit('setCategories', arr)
     });
   },
-  fetchFiyatFiltreleri({commit}){
+  fetchFiyatFiltreleri({ commit }) {
     var ref = realDb.ref('FiyatFiltreleri')
-    ref.once('value').then(function(snapshot) {
-      let arr =[]
-      if (snapshot.val()!=null) {    
+    ref.once('value').then(function (snapshot) {
+      let arr = []
+      if (snapshot.val() != null) {
         arr = Object.entries(snapshot.val()).map(e => Object.assign(e[1], { key: e[0] }))
       }
       commit('setFiyatFiltreleri', arr)
     });
   },
-  deleteCart({state,dispatch},id){
-    var ref = realDb.ref('inCart')
-    var key=state.inCart.find(inCart => inCart.id === id).key
-    ref.child(key).remove()
-    dispatch('fetchCartItems')
+  deleteCart({ state, dispatch }, id) {
+    var kullanici = firebase.auth().currentUser
+    if (kullanici) {
+      var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
+      var key = state.inCart.find(inCart => inCart.id === id).key
+      ref.child(key).remove()
+      dispatch('fetchCartItems')
+    } else {
+
+    }
   },
-  changeCountCart({state,dispatch},id_count){
-    var ref = realDb.ref('inCart')
-    var id=id_count.id
-    var item=state.inCart.find(inCart => inCart.id === id)
+  changeCountCart({ state, dispatch }, id_count) {
+    
+    var kullanici = firebase.auth().currentUser
+    var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
+    var id = id_count.id
+    var item = state.inCart.find(inCart => inCart.id === id)
     var nCount = id_count.count + item.count
-    var key=item.key
-    if (nCount<=0) {
+    var key = item.key
+    if (nCount <= 0) {
       //dispatch('deleteCart',id)
     } else {
       ref.child(key).update({
-        count:nCount
+        count: nCount
       })
       dispatch('fetchCartItems')
     }
   },
-  sepeteEkle({state,dispatch}, item) {
-    if (state.inCart.filter(c=>c.pid===item.pid).length>0) {
-      var fItemID=state.inCart.find(c=>c.pid===item.pid).id
-      dispatch('changeCountCart',{id:fItemID, count:1})
+  sepeteEkle({ state, dispatch }, item) {
+    if (state.inCart.filter(c => c.pid === item.pid).length > 0) {
+      var fItemID = state.inCart.find(c => c.pid === item.pid).id
+      dispatch('changeCountCart', { id: fItemID, count: 1 })
       return;
     }
     var incart = state.inCart;
-    if (incart.length>0) {
-      var id = incart[incart.length-1].id + 1;
+    if (incart.length > 0) {
+      var id = incart[incart.length - 1].id + 1;
     }
-    else id=1;
+    else id = 1;
     var pid = item.pid;
     var count = item.count;
     var newitem = { id, pid, count }
-    var ref = realDb.ref('inCart')
+    var kullanici = firebase.auth().currentUser
+    var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
     ref.push(newitem)
     dispatch('fetchCartItems')
     //state.inCart.push(newitem); 
@@ -246,14 +274,15 @@ export const actions = {
 
 
 export const mutations = {
-  
+
+  setUser(state, item) {
+    state.user = item
+  },
   setFilter(state, filter) {
     state.filter = filter
-    console.log(filter.searchString)
   },
   setNameFilter(state, key) {
     state.filter.searchString = key;
-    console.log(key)
   },
   setCostFilter(state, costs) {
     state.filter.minPrice = costs.min;
@@ -290,20 +319,20 @@ export const mutations = {
       state.filter.secilmisFiyatlar.splice(state.filter.secilmisFiyatlar.indexOf(id), 1)
     }
   },
-  setInCart(state, array){
-    state.inCart=array
+  setInCart(state, array) {
+    state.inCart = array
   },
-  setProducts(state,array){
-    state.data=array
+  setProducts(state, array) {
+    state.data = array
   },
-  setMarkalar(state, array){
-    state.markalar=array
+  setMarkalar(state, array) {
+    state.markalar = array
   },
-  setCategories(state, array){
-    state.categories=array
+  setCategories(state, array) {
+    state.categories = array
   },
-  setFiyatFiltreleri(state, array){
-    state.FiyatFiltreleri=array
+  setFiyatFiltreleri(state, array) {
+    state.FiyatFiltreleri = array
   }
 
 }
