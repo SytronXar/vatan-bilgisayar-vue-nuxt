@@ -11,8 +11,8 @@ export default {
     };
   },
   created() {
-    this.fetchProducts();
-    this.fetchCartItems();
+    this.fetchProducts().then(
+    this.fetchCartItems())
   },
   computed: {
     ...mapGetters({
@@ -21,6 +21,9 @@ export default {
     }),
     cartLength() {
       return this.Cart() != null ? this.Cart().length : 0;
+    },
+    productLength() {
+      return this.Products() != null ? this.Products().length : -1;
     },
   },
   methods: {
@@ -35,15 +38,20 @@ export default {
       setTimeout(() => (this.dropdownOpen = false), 250);
     },
     GetTotal() {
+
       if (!this.Cart() && !this.Products()) {
         return 0;
       } else {
-        var total = 0;
-        this.Cart().forEach((cartItem) => {
-          total +=
-            this.Products().find((data) => data.id === cartItem.pid).cost *
-            cartItem.count;
-        });
+        try {
+          var total = 0;
+          this.Cart().forEach(cartItem => {
+            total +=
+              this.Products().find(data => data.id === cartItem.pid).cost *
+              cartItem.count;
+          });
+        } catch (error) {
+          total = 0;
+        }
         return total;
       }
     },
@@ -78,7 +86,13 @@ export default {
       <span class="btn-basket--count">{{ cartLength }}</span>
     </NuxtLink>
     <ul class="dropdown-menu dropdown-menu-basket openBasket">
-      <div class="basket-lists" v-if="this.Cart() && this.Products()">
+      <div class="deneme" v-if="productLength<1">
+        <img
+          src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
+          alt="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
+        />
+      </div>
+      <div class="basket-lists" v-else>
         <span class="nothing-prod-in-basket" v-show="cartLength < 1"
           >Sepetinizde Ürün Bulunmamaktadır.</span
         >
@@ -91,12 +105,6 @@ export default {
         >
           <CartButtonItem :CartId="cartItem.id" :pId="cartItem.pid" />
         </li>
-      </div>
-      <div class="deneme" v-else>
-        <img
-          src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
-          alt="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
-        />
       </div>
       <li class="basket-bottom-dp">
         <div class="wrapper-total-cost">

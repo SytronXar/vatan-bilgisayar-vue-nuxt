@@ -233,9 +233,11 @@ export const actions = {
       var key = state.inCart.find(inCart => inCart.id === id).key
       ref.child(key).remove()
     } else {
-      const item = state.incart.find(item => item.id === id)
-      var index = array.indexOf(item)
-      var localSepet=state.inCart.splice(index, 1);
+      const item = state.inCart.find(item => item.id === id)
+      var index = state.inCart.indexOf(item)
+      alert("silinecek index: "+index)
+      var localSepet=state.inCart
+      localSepet.splice(index, 1);
       localStorage.inCart=JSON.stringify(localSepet)
     }  
     dispatch('fetchCartItems')
@@ -249,8 +251,8 @@ export const actions = {
     if (nCount <= 0) {
       //dispatch('deleteCart',id)
     } else {
-      var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
       if (kullanici) {
+        var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
         ref.child(key).update({
           count: nCount
         })

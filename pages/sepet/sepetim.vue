@@ -13,6 +13,9 @@ export default {
       Products: "Products/Products",
       Cart: "Products/Cart",
     }),
+    productLength() {
+      return this.Products() != null ? this.Products().length : -1;
+    },
   },
   methods: {
     ...mapActions({
@@ -28,7 +31,7 @@ export default {
 <template>
   <main class="basket-main-area" style="margin-top: 8.5px">
     
-    <div v-if="this.Cart() && this.Products()">
+    <div v-if="productLength>1">
       <div class="basket basket-addresses" v-if="Cart().length < 1">
         <div class="global-container">
           <div class="row">
