@@ -1,24 +1,27 @@
 <script>
 import CartButtonItem from "@/components/CartButton/TheCartButtonItem";
-import { mapActions,mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
-    CartButtonItem
+    CartButtonItem,
   },
   data() {
     return {
-      dropdownOpen: false
+      dropdownOpen: false,
     };
   },
-  created(){
-    this.fetchProducts()
-    this.fetchCartItems()
+  created() {
+    this.fetchProducts();
+    this.fetchCartItems();
   },
-  computed:{
+  computed: {
     ...mapGetters({
       Products: "Products/Products",
       Cart: "Products/Cart",
     }),
+    cartLength() {
+      return this.Cart() != null ? this.Cart().length : 0;
+    },
   },
   methods: {
     formatPrice(value) {
@@ -32,20 +35,26 @@ export default {
       setTimeout(() => (this.dropdownOpen = false), 250);
     },
     GetTotal() {
-      var total = 0;
-      this.Cart().forEach(cartItem => {
-        total +=this.Products().find(data => data.id === cartItem.pid).cost*cartItem.count;
-      });
-      return total;
+      if (!this.Cart() && !this.Products()) {
+        return 0;
+      } else {
+        var total = 0;
+        this.Cart().forEach((cartItem) => {
+          total +=
+            this.Products().find((data) => data.id === cartItem.pid).cost *
+            cartItem.count;
+        });
+        return total;
+      }
     },
-    goToCart(){
-      this.$router.push({ name: 'CartPage' })
+    goToCart() {
+      this.$router.push({ name: "CartPage" });
     },
     ...mapActions({
-    fetchProducts:  'Products/fetchProducts',
-    fetchCartItems: 'Products/fetchCartItems'
+      fetchProducts: "Products/fetchProducts",
+      fetchCartItems: "Products/fetchCartItems",
     }),
-  }
+  },
 };
 </script>
 <template>
@@ -55,7 +64,8 @@ export default {
     @mouseenter="OpenDropdown"
     @mouseleave="CloseDropdown"
   >
-    <NuxtLink :to="{name: 'sepet-sepetim'}"
+    <NuxtLink
+      :to="{ name: 'sepet-sepetim' }"
       type="button"
       id="btnMyBasket"
       class="btn btn-primary btn-basket dropdown-toggle"
@@ -65,11 +75,13 @@ export default {
     >
       <span class="icon-shopping-card"></span>
       <span class="btn-basket--text">SEPETİM</span>
-      <span class="btn-basket--count">{{Cart().length}}</span>
+      <span class="btn-basket--count">{{ cartLength }}</span>
     </NuxtLink>
     <ul class="dropdown-menu dropdown-menu-basket openBasket">
-      <div class="basket-lists">
-        <span class="nothing-prod-in-basket" v-show="Cart().length<1">Sepetinizde Ürün Bulunmamaktadır.</span>
+      <div class="basket-lists" v-if="this.Cart() && this.Products()">
+        <span class="nothing-prod-in-basket" v-show="cartLength < 1"
+          >Sepetinizde Ürün Bulunmamaktadır.</span
+        >
         <li
           id="16453018"
           class="test"
@@ -80,11 +92,18 @@ export default {
           <CartButtonItem :CartId="cartItem.id" :pId="cartItem.pid" />
         </li>
       </div>
+      <div class="deneme" v-else>
+        <img
+          src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
+          alt="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
+        />
+      </div>
       <li class="basket-bottom-dp">
         <div class="wrapper-total-cost">
           <span class="basket-sum-txt">TOPLAM:</span>
           <span class="update-"
-            >{{formatPrice(GetTotal())}}<span class="price-cent-txt">TL</span></span
+            >{{ formatPrice(GetTotal())
+            }}<span class="price-cent-txt">TL</span></span
           >
         </div>
         <div class="text-center">

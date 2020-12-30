@@ -177,7 +177,11 @@ export const actions = {
       })
     }, delay)
     if (!kullanici) {
-      //local storage den çekme kodu
+      const storage = (process.env.VUE_ENV === 'server') ? null : window.localStorage
+      var localSepet = storage?storage.inCart:"[]";
+      
+      arr = await JSON.parse(localSepet ? localSepet : "[]");
+      commit('setInCart', arr)
     }
   },
   fetchProducts({ commit, dispatch }) {
@@ -228,15 +232,16 @@ export const actions = {
       var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
       var key = state.inCart.find(inCart => inCart.id === id).key
       ref.child(key).remove()
-      dispatch('fetchCartItems')
     } else {
-
-    }
+      const item = state.incart.find(item => item.id === id)
+      var index = array.indexOf(item)
+      var localSepet=state.inCart.splice(index, 1);
+      localStorage.inCart=JSON.stringify(localSepet)
+    }  
+    dispatch('fetchCartItems')
   },
   changeCountCart({ state, dispatch }, id_count) {
-    
     var kullanici = firebase.auth().currentUser
-    var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
     var id = id_count.id
     var item = state.inCart.find(inCart => inCart.id === id)
     var nCount = id_count.count + item.count
@@ -244,9 +249,16 @@ export const actions = {
     if (nCount <= 0) {
       //dispatch('deleteCart',id)
     } else {
-      ref.child(key).update({
-        count: nCount
-      })
+      var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
+      if (kullanici) {
+        ref.child(key).update({
+          count: nCount
+        })
+      } else {
+        var localSepet = state.inCart
+        localSepet.find(inCart => inCart.id === id).count = nCount;
+        localStorage.inCart=JSON.stringify(localSepet)
+      }
       dispatch('fetchCartItems')
     }
   },
@@ -265,8 +277,14 @@ export const actions = {
     var count = item.count;
     var newitem = { id, pid, count }
     var kullanici = firebase.auth().currentUser
-    var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
-    ref.push(newitem)
+    if (kullanici) {
+      var ref = realDb.ref("usersData/" + kullanici.uid + "/inCart")
+      ref.push(newitem)
+    } else {
+      var localSepet=state.inCart
+      localSepet.push(newitem)
+      localStorage.inCart=JSON.stringify(localSepet)
+    }
     dispatch('fetchCartItems')
     //state.inCart.push(newitem); 
   },
