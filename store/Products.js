@@ -235,7 +235,6 @@ export const actions = {
     } else {
       const item = state.inCart.find(item => item.id === id)
       var index = state.inCart.indexOf(item)
-      alert("silinecek index: "+index)
       var localSepet=state.inCart
       localSepet.splice(index, 1);
       localStorage.inCart=JSON.stringify(localSepet)
