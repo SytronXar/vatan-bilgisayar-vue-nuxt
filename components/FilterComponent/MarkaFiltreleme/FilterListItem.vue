@@ -2,11 +2,8 @@
   <li data-count="1" class="filter-list__item">
     <a @click="addOrRemove()" class="filter-list__link"
       ><div class="wrapper-checkbox" >
-        <input type="checkbox" :checked="isSelected" />
-        <span class="checkmark" :key="isInSecilmisMarkalar(markaId)"></span>
-        <span class="filter-list__text"
-          >{{isSelected}}{{ marka.name }} ({{ countOfProductIn }})</span
-        >
+        <input type="checkbox" :checked="isInSecilmisMarkalar(markaId)" /> <span class="checkmark" :key="isInSecilmisMarkalar(markaId)"></span>
+        <span class="filter-list__text">{{marka.name}}</span>
       </div></a
     >
   </li>

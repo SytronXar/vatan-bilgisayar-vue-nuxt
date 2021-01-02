@@ -4,9 +4,7 @@
       <div class="wrapper-checkbox">
         <input type="checkbox" :checked="isSelected" />
         <span class="checkmark"></span>
-        <span class="filter-list__text"
-          >{{ category.name }} ({{ countOfProductIn }})</span
-        >
+        <span class="filter-list__text">{{ category.name }}</span>
       </div>
     </a>
   </li>
@@ -35,7 +33,7 @@ export default {
       return this.categoryId === this.secilmisKategori;
     },
     countOfProductIn() {
-      return "n"/* this.countOfProductInCategory(this.categoryId); */
+      return "n"; /* this.countOfProductInCategory(this.categoryId); */
     },
   },
   methods: {
