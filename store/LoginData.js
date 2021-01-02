@@ -33,7 +33,8 @@ export const actions = {
                 .auth()
                 .signOut()
                 .then(() => {
-                    this.$router.push("/login/signin");
+                    //this.$router.push("/login/signin");
+                    location.reload();
                 });
         } catch (err) {
             console.log(err);
@@ -74,7 +75,8 @@ export const actions = {
                     }
                     alert("Kullanıcı verisi Realtime'a kaydedildi") 
                     ref.set(uData);
-                    payload.$router.push("/"); 
+                    //payload.$router.push("/"); 
+                    location.reload();
                 },
                 err => {
                     alert(err.message);
@@ -93,7 +95,8 @@ export const actions = {
                 .then(
                     user => {
                         alert(payload.email + " ile giriş yaptınız");
-                        this.$router.push("/");
+                        //this.$router.push("/");
+                        location.reload();
                     },
                     err => {
                         alert(err.message);
