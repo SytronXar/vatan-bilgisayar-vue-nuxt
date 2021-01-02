@@ -5,7 +5,7 @@
         <input type="checkbox" :checked="isSelected" />
         <span class="checkmark"></span>
         <span class="filter-list__text"
-          >{{ category.name }} ({{ countOfProductIn }})</span
+          >{{ category.name }}</span
         >
       </div>
     </a>
