@@ -45,10 +45,11 @@ export const getters = {
     return state.filter.secilmisFiyatlar.includes(id);
   },
 
-  getFilteredProducts: (state) => () => {
+  getFilteredProducts: (state,commit) => () => {
     if (state.filteredProductList[0] === -1) {
-      state.filteredProductList = state.data;
-      return state.filteredProductList;
+      return state.data
+     // commit('setFilteredProductList', state.data)
+      //state.filteredProductList = state.data;
     }
     return state.filteredProductList;
   },
@@ -116,8 +117,9 @@ export const getters = {
     return productsData.filter(product => product.categoryId === state.filter.secilmisKategori)
   },
   productFilter: (state, getters) => () => {
-    state.filteredProductList = getters.fiyatFiltreleriyleArama(getters.kategoriyleArama(getters.markalarlaArama(getters.searchWithPrice(getters.searchWithString(state.data)))));
-    return state.filteredProductList;
+    var filteredList = getters.fiyatFiltreleriyleArama(getters.kategoriyleArama(getters.markalarlaArama(getters.searchWithPrice(getters.searchWithString(state.data)))));
+    //ispatch('setFilteredProductList', filteredList);
+    return filteredList;
   },
 }
 
@@ -321,6 +323,7 @@ export const mutations = {
       return;
     }
     state.filter.secilmisMarkalar.push(id);
+    
   },
   removeSecilmisMarka(state, id) {
     if (state.filter.secilmisMarkalar.includes(id)) {

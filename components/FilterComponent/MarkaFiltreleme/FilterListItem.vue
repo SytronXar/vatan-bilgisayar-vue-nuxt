@@ -2,8 +2,11 @@
   <li data-count="1" class="filter-list__item">
     <a @click="addOrRemove()" class="filter-list__link"
       ><div class="wrapper-checkbox" >
-        <input type="checkbox" :checked="isInSecilmisMarkalar(markaId)" /> <span class="checkmark" :key="isInSecilmisMarkalar(markaId)"></span>
-        <span class="filter-list__text">{{marka.name}} ({{countOfProductIn}})</span>
+        <input type="checkbox" :checked="isSelected" />
+        <span class="checkmark" :key="isInSecilmisMarkalar(markaId)"></span>
+        <span class="filter-list__text"
+          >{{isSelected}}{{ marka.name }} ({{ countOfProductIn }})</span
+        >
       </div></a
     >
   </li>
@@ -22,14 +25,20 @@ export default {
       countOfProductInMarka: "Products/getNumberOfProductInMarkaInFilter",
       isInSecilmisMarkalar: "Products/isInSecilmisMarkalar",
     }),
+    ...mapState({
+      Filtre: (state) => state.Products.filter,
+    }),
     marka() {
       return this.getMarkaWithId(this.markaId);
+    },
+    countOfProductIn() {
+      return "n"; /* this.countOfProductInMarka(this.markaId); */
     },
     isSelected() {
       return this.isInSecilmisMarkalar(this.markaId);
     },
-    countOfProductIn() {
-      return "n"/* this.countOfProductInMarka(this.markaId); */
+    getChecked(){
+      return this.Filtre.secilmisMarkalar.includes(this.markaId);
     },
   },
   methods: {
@@ -42,7 +51,7 @@ export default {
     addOrRemove() {
       if (this.isSelected) this.removeSecilmisMarka();
       else this.addSecilmisMarka();
-      this.$forceUpdate();
+     
     },
   },
 };
