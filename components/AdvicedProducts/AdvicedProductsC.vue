@@ -1,6 +1,6 @@
 <script>
 // @ is an alias to /src
-import AdvicedProductsButton from "@/components/AdvicedProductsButton";
+import AdvicedProductsButton from "@/components/AdvicedProducts/AdvicedProductsButton";
 import { mapGetters } from "vuex";
 export default {
   name: "UrunSayfasi",
@@ -15,7 +15,7 @@ export default {
   },
   computed:{
     ...mapGetters({
-      getProductWithId: "Products/getProductWithId"
+      getProductWithId: "getProductWithId"
     }),
   },
   data() {
@@ -52,7 +52,7 @@ export default {
       return name.toLowerCase().replace(/\s/g, "-");
     },
     getProductData(sProduct) {
-      return this.$store.state.Products.data.find(data => data.id === sProduct);
+      return this.$store.state.data.find(data => data.id === sProduct);
     }
   }
 };

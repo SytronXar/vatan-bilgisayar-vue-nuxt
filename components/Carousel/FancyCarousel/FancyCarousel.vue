@@ -101,7 +101,7 @@ export default {
       return this.carouselItemWidth + this.carouselItemMarginR;
     },
     Products(){
-      return this.$store.state.Products.data
+      return this.$store.state.data
     },
     nItem(){
       return this.Products.length

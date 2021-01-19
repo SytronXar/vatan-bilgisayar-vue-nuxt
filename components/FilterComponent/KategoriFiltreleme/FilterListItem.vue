@@ -20,11 +20,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getCategoryWithId: "Products/getCategoryWithId",
-      countOfProductInCategory: "Products/getNumberOfProductInCategoryInFilter",
+      getCategoryWithId: "getCategoryWithId",
+      countOfProductInCategory: "getNumberOfProductInCategoryInFilter",
     }),
     ...mapState({
-      secilmisKategori: (state) => state.Products.filter.secilmisKategori,
+      secilmisKategori: (state) => state.filter.secilmisKategori,
     }),
     category() {
       return this.getCategoryWithId(this.categoryId);
@@ -38,10 +38,10 @@ export default {
   },
   methods: {
     setSecilmisCategori() {
-      this.$store.commit("Products/setSecilmisCategory", this.categoryId);
+      this.$store.commit("setSecilmisCategory", this.categoryId);
     },
     clearSecilmisCategori() {
-      this.$store.commit("Products/clearSecilmisCategory");
+      this.$store.commit("clearSecilmisCategory");
     },
     setOrClear() {
       if (this.isSelected) this.clearSecilmisCategori();

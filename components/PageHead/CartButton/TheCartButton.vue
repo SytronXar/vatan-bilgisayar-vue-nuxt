@@ -1,5 +1,5 @@
 <script>
-import CartButtonItem from "@/components/CartButton/TheCartButtonItem";
+import CartButtonItem from "../../../components/PageHead/CartButton/TheCartButtonItem";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
@@ -10,14 +10,10 @@ export default {
       dropdownOpen: false,
     };
   },
-  created() {
-    this.fetchProducts().then(
-    this.fetchCartItems())
-  },
   computed: {
     ...mapGetters({
-      Products: "Products/Products",
-      Cart: "Products/Cart",
+      Products: "Products",
+      Cart: "Cart",
     }),
     cartLength() {
       return this.Cart() != null ? this.Cart().length : 0;
@@ -57,11 +53,7 @@ export default {
     },
     goToCart() {
       this.$router.push({ name: "CartPage" });
-    },
-    ...mapActions({
-      fetchProducts: "Products/fetchProducts",
-      fetchCartItems: "Products/fetchCartItems",
-    }),
+    }
   },
 };
 </script>

@@ -54,8 +54,8 @@
 
 <script>
 // @ is an alias to /src
-import ProductCarouselButton from "@/components/Carousel/ProductCarousel/ProductCarouselButton";
-import CarouselDot from "@/components/Carousel/ProductCarousel/ProductCarouselDots";
+import ProductCarouselButton from "../../../components/Carousel/ProductCarousel/ProductCarouselButton";
+import CarouselDot from "../../../components/Carousel/ProductCarousel/ProductCarouselDots";
 export default {
   props: {
     productId: {
@@ -108,7 +108,7 @@ export default {
       mouseX: 0,
       owlGrab: false,
       nCarouselItem: 1,
-      productData: this.$store.state.Products.data.find((data) => data.id === this.productId),
+      productData: this.$store.state.data.find((data) => data.id === this.productId),
       referance: this.productId + "oso",
     };
   },

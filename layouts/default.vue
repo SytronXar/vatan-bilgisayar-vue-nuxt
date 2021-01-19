@@ -10,10 +10,11 @@
   </div>
 </template>
 <script>
-import TheWrapper from "@/components/TheWrapper";
-import CategoryDropbar from "@/components/CategoryDropbar";
-import FastShippingAd from "@/components/FastShippingAd";
-import BottomOfPage from "@/components/BottomOfPage";
+import TheWrapper from "@/components/PageHead/TheWrapper";
+import CategoryDropbar from "@/components/PageHead/CategoryDropbar";
+import FastShippingAd from "@/components/PageHead/FastShippingAd";
+import BottomOfPage from "@/components/PageFooter/BottomOfPage";
+import { mapGetters, mapActions } from "vuex";
 export default {
   head: {
     script: [
@@ -33,6 +34,16 @@ export default {
     return {
       title: "",
     };
+  },
+  created() {
+    this.fetchProducts();
+    this.fetchCartItems();
+  },
+  methods: {
+    ...mapActions({
+      fetchProducts: "fetchProducts",
+      fetchCartItems: "fetchCartItems",
+    }),
   },
   mounted() {
     document.addEventListener("dragstart", (e) => {

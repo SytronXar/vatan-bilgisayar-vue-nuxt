@@ -1,17 +1,17 @@
 <template>
   <div class="Bilgisayar">
-    <BilgisayarC />
+    <BilgisayarComponent />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 
-import BilgisayarC from "@/components/BilgisayarC";
+import BilgisayarComponent from "@/components/BilgisayarPage/BilgisayarComponent";
 export default {
   name: "Bilgisayar",
   components: {
-    BilgisayarC
+    BilgisayarComponent
   }
 };
 </script>

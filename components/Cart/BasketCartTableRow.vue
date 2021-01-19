@@ -1,5 +1,5 @@
 <script>
-import { mapActions,mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 export default {
   props: {
     cartId: {
@@ -18,35 +18,37 @@ export default {
     },
     changeCount(number) {
       //this.inCart[this.index].count += number;
-      this.changeCountCart({id:this.cartId,count:number})
+      this.changeCountCart({ id: this.cartId, count: number });
     },
     DeleteCartItem() {
       //this.inCart.splice(this.index, 1);
-      this.deleteCart(this.cartId)
+      this.deleteCart(this.cartId);
     },
     ProductHref() {
       return this.product.name.toLowerCase().replace(/\s/g, "-");
     },
     ...mapActions({
-    deleteCart:  'Products/deleteCart',
-    changeCountCart: 'Products/changeCountCart'
+      deleteCart: "deleteCart",
+      changeCountCart: "changeCountCart",
     }),
   },
   data() {
     return {};
   },
   computed: {
-    Products() {
-      return this.$store.state.Products.data;
-    },
-    inCart() {
-      return this.$store.state.Products.inCart;
-    },
+    ...mapState({
+      products: (state) => state.data,
+      inCart: (state) => state.inCart,
+    }),
+    ...mapGetters({
+      getProductWithId: "getProductWithId",
+      getCartItemWithId: "getCartItemWithId",
+    }),
     product() {
-      return this.Products.find(data => data.id === this.cartItem.pid);
+      return this.getProductWithId(this.cartItem.pid);
     },
     cartItem() {
-      return this.inCart.find(inCart => inCart.id === this.cartId);
+      return this.getCartItemWithId(this.cartId);
     },
   },
 };

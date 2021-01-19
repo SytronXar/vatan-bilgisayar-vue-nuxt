@@ -76,9 +76,9 @@
   </div>
 </template>
 <script>
-import KategoriFiltrePaneli from "@/components/FilterComponent/KategoriFiltreleme/Panel";
-import MarkaFiltrePaneli from "@/components/FilterComponent/MarkaFiltreleme/Panel";
-import FiyatFiltrePaneli from "@/components/FilterComponent/FiyatFiltreleme/Panel";
+import KategoriFiltrePaneli from "../../components/FilterComponent/KategoriFiltreleme/Panel";
+import MarkaFiltrePaneli from "../../components/FilterComponent/MarkaFiltreleme/Panel";
+import FiyatFiltrePaneli from "../../components/FilterComponent/FiyatFiltreleme/Panel";
 export default {
   components: {
     KategoriFiltrePaneli,
@@ -93,7 +93,7 @@ export default {
   methods: {
     setNameFilter() {
       var key = this.SearchString;
-      this.$store.commit("Products/setNameFilter", key);
+      this.$store.commit("setNameFilter", key);
     }
   },
 };

@@ -1,27 +1,21 @@
 <script>
-import MyCartPanel from "@/components/MyCartPanel";
-import { mapGetters, mapActions } from "vuex";
+import MyCartPanel from "../../components/Cart/MyCartPanel";
+import { mapState } from "vuex";
 export default {
   name: "CartPage",
   components: { MyCartPanel },
-  created() {
-    this.fetchProducts();
-    this.fetchCartItems();
-  },
+
   computed: {
-    ...mapGetters({
-      Products: "Products/Products",
-      Cart: "Products/Cart",
+    ...mapState({
+      products: (state) => state.data,
+      inCart: (state) => state.inCart,
     }),
     productLength() {
-      return this.Products() != null ? this.Products().length : -1;
+      return this.products != null ? this.products.length : -1;
     },
-  },
-  methods: {
-    ...mapActions({
-      fetchProducts: "Products/fetchProducts",
-      fetchCartItems: "Products/fetchCartItems",
-    }),
+    inCartLength() {
+      return this.inCart ? this.inCart.length : -1;
+    },
   },
   data() {
     return {};
@@ -30,9 +24,8 @@ export default {
 </script>
 <template>
   <main class="basket-main-area" style="margin-top: 8.5px">
-    
-    <div v-if="productLength>1">
-      <div class="basket basket-addresses" v-if="Cart().length < 1">
+    <div>
+      <div class="basket basket-addresses" v-if="inCartLength < 1">
         <div class="global-container">
           <div class="row">
             <div class="col-xs-12">
@@ -55,7 +48,7 @@ export default {
         </div>
       </div>
       <!-- Dolu Sepet -->
-      <div class="basket" v-else>
+      <div class="basket" v-else-if="productLength > 1">
         <div class="basket-process">
           <div class="global-container">
             <div class="row">
@@ -95,12 +88,12 @@ export default {
           <MyCartPanel />
         </div>
       </div>
-    </div>
-    <div class="deneme" v-else>
-      <img
-        src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
-        alt="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
-      />
+      <div class="deneme" v-else>
+        <img
+          src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
+          alt="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
+        />
+      </div>
     </div>
   </main>
 </template>

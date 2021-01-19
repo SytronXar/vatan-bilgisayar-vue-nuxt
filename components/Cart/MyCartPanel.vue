@@ -1,5 +1,5 @@
 <script>
-import BasketCartTableRow from "@/components/BasketCartTableRow";
+import BasketCartTableRow from "../../components/Cart/BasketCartTableRow";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: { BasketCartTableRow },
@@ -9,8 +9,8 @@ export default {
   },
   computed:{
     ...mapGetters({
-      Products: "Products/Products",
-      Cart: "Products/Cart",
+      Products: "Products",
+      Cart: "Cart",
     }),
     GetTotal() {
       var total = 0;
@@ -48,7 +48,7 @@ export default {
           >
         </div>
         <div></div>
-        <div class="basket-cart__table" id="basketList">
+        <div class="basket-cart__table" id="basketList" v-if="Cart()">
           <div class="basket-cart__table-row basket-cart__table-header">
             <div class="basket-cart__table-column info">Ürünlerim</div>
             <div class="basket-cart__table-column count hidden-xs hidden-sm">

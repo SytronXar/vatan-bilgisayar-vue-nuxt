@@ -20,10 +20,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getFiyatFiltreWithId: "Products/getFiyatFiltreWithId",
+      getFiyatFiltreWithId: "getFiyatFiltreWithId",
       countOfProductInFiyatFiltre:
-        "Products/getNumberOfProductInFiyatFiltreInFilter",
-      isInSecilmisFiyatlar: "Products/isInSecilmisFiyatlar",
+        "getNumberOfProductInFiyatFiltreInFilter",
+      isInSecilmisFiyatlar: "isInSecilmisFiyatlar",
     }),
     FiyatFiltre() {
       return this.getFiyatFiltreWithId(this.fiyatId);
@@ -37,10 +37,10 @@ export default {
   },
   methods: {
     addSecilmisFiyat() {
-      this.$store.commit("Products/addSecilmisFiyat", this.fiyatId);
+      this.$store.commit("addSecilmisFiyat", this.fiyatId);
     },
     removeSecilmisFiyat() {
-      this.$store.commit("Products/removeSecilmisFiyat", this.fiyatId);
+      this.$store.commit("removeSecilmisFiyat", this.fiyatId);
     },
     addOrRemove() {
       if (this.isInSecilmisFiyatlar(this.fiyatId)) {

@@ -68,7 +68,7 @@
   </div>
 </template>
 <script>
-import FilterListItem from "@/components/FilterComponent/FiyatFiltreleme/FilterListItem";
+import FilterListItem from "../../../components/FilterComponent/FiyatFiltreleme/FilterListItem";
 import { mapState } from "vuex";
 export default {
   components: {
@@ -85,12 +85,12 @@ export default {
       var min = Number(this.MinPrice);
       var max = Number(this.MaxPrice);
       console.log("max");
-      this.$store.commit("Products/setCostFilter", { min, max });
+      this.$store.commit("setCostFilter", { min, max });
     },
   },
   computed: {
     ...mapState({
-      FiyatFiltreleri: (state) => state.Products.FiyatFiltreleri,
+      FiyatFiltreleri: (state) => state.FiyatFiltreleri,
     }),
   },
 };

@@ -1,6 +1,5 @@
 <script>
 // @ is an alias to /src
-import Products from "@/store/Products";
 export default {
   name: "UrunSayfasi",
   computed: {},
@@ -16,10 +15,10 @@ export default {
   },
   data() {
     return {
-      cartItem: this.$store.state.Products.inCart.find(
+      cartItem: this.$store.state.inCart.find(
         (inCart) => inCart.id === this.CartId
       ),
-      product: this.$store.state.Products.data.find(
+      product: this.$store.state.data.find(
         (data) => data.id === this.pId
       ),
     };

@@ -351,7 +351,7 @@
                         <a
                           class="btn btn-default btn-transparent btn-show-all-pc-product"
                           href="/outlet/cep-telefonu-modelleri/"
-                          style="margin-left: 15px;"
+                          style="margin-left: 15px"
                           >Outlet Cep Telefonları</a
                         >
                       </div>
@@ -375,7 +375,13 @@
                 @mouseenter="OpenDropdown"
                 @mouseleave="CloseDropdown"
               >
-                <a class="nav-first-link" href="/bilgisayar/">Bilgisayar</a>
+                <nuxt-link
+                  class="nav-first-link"
+                  :to="{
+                    name: 'bilgisayar',
+                  }"
+                  >Bilgisayar
+                </nuxt-link>
                 <div class="dropdown-menu">
                   <div class="row">
                     <div class="menu-wrapper col-lg-9">
@@ -392,17 +398,19 @@
                             >T&uuml;m Bilgisayarlar</a
                           >
                         </li>
-                        </li>
-                        <!-- Diğer -->
-                        
-                        <li class="no-brand-li" v-for="category in Categories" :key="category.id">
+
+                        <li
+                          class="no-brand-li"
+                          v-for="category in Categories"
+                          :key="category.id"
+                        >
                           <a
                             class="magic-parent-link normal-nav-link no-brand"
                             href="/bilgisayar/"
-                            >{{category.name}}</a
+                            >{{ category.name }}</a
                           >
                         </li>
-                        
+                      </ul>
                       <div class="m-b-30 m-l-45">
                         <a
                           class="btn btn-default btn-transparent btn-show-all-pc-product"
@@ -412,7 +420,7 @@
                         <a
                           class="btn btn-default btn-transparent btn-show-all-pc-product"
                           href="/outlet/notebook/"
-                          style="margin-left: 15px;"
+                          style="margin-left: 15px"
                           >Outlet Notebooklar</a
                         >
                       </div>
@@ -441,6 +449,7 @@
                     </div>
                   </div>
                 </div>
+              </li>
               <li
                 class="dropdown"
                 @mouseenter="OpenDropdown"
@@ -3141,7 +3150,11 @@
 import { mapState } from "vuex";
 export default {
   components: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      Categories: (state) => state.categories,
+    }),
+  },
   props: {},
   methods: {
     OpenDropdown(event) {

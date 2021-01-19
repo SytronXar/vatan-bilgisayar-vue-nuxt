@@ -8,7 +8,7 @@
             <div class="navbar-header__content no-padding">
               <div class="navbar-header__area">
                 <NuxtLink class="navbar-brand" to="/">
-                  <img src="../assets/images/logo.png" alt="Vatan Bilgisayar" />
+                  <img src="../../assets/images/logo.png" alt="Vatan Bilgisayar" />
                 </NuxtLink>
               </div>
               <div class="navbar-header__area">
@@ -121,9 +121,8 @@
 }
 </style>
 <script>
-import TheTopBar from "@/components/TheTopBar";
-import CartButton from "@/components/CartButton/TheCartButton";
-import LoginData from "@/store/LoginData";
+import TheTopBar from "../../components/PageHead/TheTopBar";
+import CartButton from "../../components/PageHead/CartButton/TheCartButton";
 import firebase from "firebase";
 import { mapActions } from "vuex";
 export default {
@@ -156,7 +155,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      logout: "LoginData/logout"
+      logout: "logout"
     }),
     getUserdata() {
       // Kullanıcı verilerini çekiyoruz.

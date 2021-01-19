@@ -55,7 +55,7 @@ export default {
   components: {},
   data() {
     return {
-      productData: this.$store.state.Products.data.find(
+      productData: this.$store.state.data.find(
         (data) => data.id === this.productId
       ),
     };

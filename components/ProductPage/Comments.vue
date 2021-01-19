@@ -5,7 +5,7 @@ export default {
   name: "UrunSayfasi",
   computed: {
     ...mapGetters({
-      getProductWithId: "Products/getProductWithId"
+      getProductWithId: "getProductWithId"
     }),
     productData(){
       this.getProductWithId(this.productId)

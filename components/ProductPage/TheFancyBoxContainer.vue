@@ -1,6 +1,5 @@
 <script>
 import FancyCarousel from "@/components/Carousel/FancyCarousel/FancyCarousel";
-import Products from "@/store/Products";
 export default {
   components: {
     FancyCarousel,
@@ -13,7 +12,7 @@ export default {
   },
   data() {
     return {
-      product: this.$store.state.Products.data.find(
+      product: this.$store.state.data.find(
         (data) => data.id === this.productId
       ),
       show: false,

@@ -1,8 +1,8 @@
 <script>
 // @ is an alias to /src
 
-import Comments from "@/components/Comments";
-import productImagenInfo from "@/components/productImagenInfo";
+import Comments from "@/components/ProductPage/Comments";
+import productImagenInfo from "@/components/ProductPage/ProductImageAndInfo";
 import FiveCarousel from "@/components/Carousel/FiveCarousel";
 import { mapActions,mapGetters } from "vuex";
 export default {
@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getProductWithId: "Products/getProductWithId"
+      getProductWithId: "getProductWithId"
     }),
     getTitle(){
       return !this.getProductWithId(this.productId)? "Vatan Bilgisayar" : this.getProductWithId(this.productId).name

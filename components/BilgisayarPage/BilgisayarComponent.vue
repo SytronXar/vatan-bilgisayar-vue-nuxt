@@ -281,8 +281,8 @@
   </div>
 </template>
 <script>
-import ProductButton from "@/components/TheProductButton";
-import CategoriesBilgisayar from "@/components/CategoriesBilgisayar";
+import ProductButton from "../../components/TheProductButton";
+import CategoriesBilgisayar from "../../components/BilgisayarPage/CategoriesBilgisayar";
 import { mapGetters } from "vuex";
 export default {
   components: {
@@ -296,7 +296,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      productFilter: "Products/productFilter",
+      productFilter: "productFilter",
     }),
   },
   methods: {

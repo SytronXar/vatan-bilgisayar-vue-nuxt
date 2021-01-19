@@ -18,12 +18,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getMarkaWithId: "Products/getMarkaWithId",
-      countOfProductInMarka: "Products/getNumberOfProductInMarkaInFilter",
-      isInSecilmisMarkalar: "Products/isInSecilmisMarkalar",
+      getMarkaWithId: "getMarkaWithId",
+      countOfProductInMarka: "getNumberOfProductInMarkaInFilter",
+      isInSecilmisMarkalar: "isInSecilmisMarkalar",
     }),
     ...mapState({
-      Filtre: (state) => state.Products.filter,
+      Filtre: (state) => state.filter,
     }),
     marka() {
       return this.getMarkaWithId(this.markaId);
@@ -40,10 +40,10 @@ export default {
   },
   methods: {
     addSecilmisMarka() {
-      this.$store.commit("Products/addSecilmisMarka", this.markaId);
+      this.$store.commit("addSecilmisMarka", this.markaId);
     },
     removeSecilmisMarka() {
-      this.$store.commit("Products/removeSecilmisMarka", this.markaId);
+      this.$store.commit("removeSecilmisMarka", this.markaId);
     },
     addOrRemove() {
       if (this.isSelected) this.removeSecilmisMarka();

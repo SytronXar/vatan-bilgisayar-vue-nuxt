@@ -71,7 +71,7 @@
   </div>
 </template>
 <script>
-import ProductCarousel from "@/components/Carousel/ProductCarousel/ProductCarousel";
+import ProductCarousel from "../components/Carousel/ProductCarousel/ProductCarousel";
 import moment from "moment";
 export default {
   data() {
@@ -83,7 +83,7 @@ export default {
   components: { ProductCarousel },
   computed: {
     productData() {
-      return this.$store.state.Products.data.find(data => data.id === this.productId);
+      return this.$store.state.data.find(data => data.id === this.productId);
     },
     owlStageWidth() {
       return this.productData.images.length * this.imageWidth;

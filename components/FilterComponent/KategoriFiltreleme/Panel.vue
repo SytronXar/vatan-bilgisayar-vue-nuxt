@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import FilterListItem from "@/components/FilterComponent/KategoriFiltreleme/FilterListItem";
+import FilterListItem from "../../../components/FilterComponent/KategoriFiltreleme/FilterListItem";
 import { mapState } from "vuex";
 export default {
   components: {
@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     ...mapState({
-      categories: (state) => state.Products.categories,
+      categories: (state) => state.categories,
     }),
   },
 };

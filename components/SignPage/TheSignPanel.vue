@@ -1,16 +1,11 @@
 <script>
-import PasswordInput from "@/components/ThePasswordInput";
+import PasswordInput from "../../components/SignPage/ThePasswordInput";
 import firebase from "firebase";
 import { mapActions } from "vuex";
 export default {
   name: "login",
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.isAlreadyLogged = true;
-        this.$router.push("/"); //Anasayfaya yönlendiriyor giriş yapılmışsa
-      } else this.isAlreadyLogged = false;
-    });
+    this.OnStateChanged();
   },
   components: {
     PasswordInput,
@@ -33,10 +28,32 @@ export default {
   },
   methods: {
     ...mapActions({
-      register: "LoginData/register",
-      login: "LoginData/login",
-      updateUser: "LoginData/updateData",
+      register: "register",
+      login: "login",
+      updateUser: "updateData",
     }),
+    girisYap() {
+      this.login({ email: this.email, password: this.password }).then(() => {
+        this.OnStateChanged();
+      });
+    },
+    OnStateChanged() {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.isAlreadyLogged = true;
+          alert("Giriş yapılmıştır On state changed")
+          this.$router.push("/"); //Anasayfaya yönlendiriyor giriş yapılmışsa
+        } else this.isAlreadyLogged = false;
+      });
+    },
+    kaydol() {
+      this.register({
+        email: this.email,
+        password: this.password,
+        name: this.name,
+        phone: this.phone,
+      });
+    },
   },
 };
 </script>
@@ -154,7 +171,7 @@ export default {
                   id="login-button"
                   type="submit"
                   class="btn btn-primary signup-form__button"
-                  @click="login({ email, password })"
+                  @click="girisYap()"
                 >
                   GİRİŞ YAP
                 </button>
@@ -356,14 +373,7 @@ export default {
               </div>
               <div class="form-group text-center">
                 <button
-                  v-on:click="
-                    register({
-                      email: email,
-                      password: password,
-                      name: name,
-                      phone: phone,
-                    })
-                  "
+                  v-on:click="kaydol()"
                   type="submit"
                   class="btn btn-primary signup-form__button"
                 >

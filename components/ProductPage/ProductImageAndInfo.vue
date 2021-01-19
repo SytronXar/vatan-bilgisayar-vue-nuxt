@@ -1,13 +1,12 @@
 <script>
 // @ is an alias to /src
-import Products from "@/store/Products";
-import AdvicedProductsC from "@/components/AdvicedProductsC";
-import TheFancyBoxContainer from "@/components/TheFancyBoxContainer";
+import AdvicedProductsC from "@/components/AdvicedProducts/AdvicedProductsC";
+import TheFancyBoxContainer from "@/components/ProductPage/TheFancyBoxContainer";
 import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      getProductWithId: "Products/getProductWithId"
+      getProductWithId: "getProductWithId"
     }),
     productData() {
       this.getProductWithId(this.productId);
@@ -37,7 +36,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      sepeteEkle: "Products/sepeteEkle"
+      sepeteEkle: "sepeteEkle"
     }),
     updateimg(index) {
       this.currentimg = index;

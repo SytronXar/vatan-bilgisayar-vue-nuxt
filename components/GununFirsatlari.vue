@@ -40,9 +40,9 @@
   </div>
 </template>
 <script>
-import Zeki from "@/components/Zeki";
+import Zeki from "../components/HomePage/Zeki";
 import {mapGetters} from "vuex";
-import ProductButton from "@/components/TheProductButton";
+import ProductButton from "../components/TheProductButton";
 export default {
   components: {
     Zeki,
@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      Products: "Products/Products"
+      Products: "Products"
     }),
   },
   methods: {

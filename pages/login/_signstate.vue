@@ -1,6 +1,6 @@
 <script>
 // @ is an alias to /src
-import SignPanel from "@/components/TheSignPanel";
+import SignPanel from "@/components/SignPage/TheSignPanel";
 export default {
   name: "LoginPage",
   components: {

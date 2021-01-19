@@ -33667,3 +33667,14 @@ input.apple-switch:checked:after {
   position: relative;
   margin: auto;
 }
+
+.NuxtLogo {
+  animation: 1s appear;
+  margin: auto;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+}

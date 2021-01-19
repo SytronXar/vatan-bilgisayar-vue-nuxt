@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import FilterListItem from "@/components/FilterComponent/MarkaFiltreleme/FilterListItem";
+import FilterListItem from "../../../components/FilterComponent/MarkaFiltreleme/FilterListItem";
 import { mapState } from "vuex";
 export default {
   components: {
@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     ...mapState({
-      markalar: (state) => state.Products.markalar,
+      markalar: (state) => state.markalar,
     }),
   },
 };
