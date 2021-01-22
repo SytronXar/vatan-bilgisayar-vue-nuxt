@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     ...mapActions({
-    fetchProducts:  'Products/fetchProducts',
+    fetchProducts:  'fetchProducts',
     }),
   },
   created(){

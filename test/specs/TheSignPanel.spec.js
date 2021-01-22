@@ -47,7 +47,7 @@ describe('TheSignPanel', () => {
             });
         });
         //Kontrol edilecek
-        it("Successfull Login", () => {
+        /* it("Successfull Login", () => {
             let loginButton = wrapper.find(".signup-form__button");
             loginButton.trigger("click").then(() => {
                 expect(wrapper.text()).toContain("Bu sayfaya erişemezsiniz");
@@ -58,7 +58,7 @@ describe('TheSignPanel', () => {
             loginButton.trigger("click").then(() => {
                 expect(wrapper.text()).toContain("Şifremi Unuttum");
             });
-        });
+        }); */
     });
     describe('openLogin==false iken ', () => {
         wrapper = mount(TheSignPanel, {

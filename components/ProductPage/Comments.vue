@@ -39,7 +39,7 @@ export default {
                   Bu ürünle toplam <a>{{ commentsLength }}</a> adet
                   yorum yapıldı.
                 </h4>
-                <!-- <form
+                <form
                   id="comment-with-login"
                   method="post"
                   style="display: none;"
@@ -62,7 +62,7 @@ export default {
                       </div>
                     </div>
                   </div>
-                </form> -->
+                </form> 
                 <div id="comment-without-login" class="container-fluid">
                   <div class="row">
                     <div class="form-group text-center">
@@ -220,7 +220,7 @@ export default {
                   id="itemContainer"
                   class="row"
                   v-for="comment in getProductWithId(productId).comments"
-                  :key="comment"
+                  :key="comment.name"
                 >
                   <div
                     class="col-md-12 ds-table comment-items"

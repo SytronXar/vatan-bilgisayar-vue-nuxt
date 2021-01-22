@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     ...mapActions({
-    fetchProducts:  'Products/fetchProducts',
+    fetchProducts:  'fetchProducts',
     }),
     updateimg(index) {
       this.currentimg = index;

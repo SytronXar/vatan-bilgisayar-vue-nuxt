@@ -67,13 +67,14 @@ export const getters = {
         return state.inCart.find(item => item.id === id)
     },
 
-    getFilteredProducts: (state, commit) => () => {
-        if (state.filteredProductList[0] === -1) {
+    getFilteredProducts: (getters) => () => {
+        /* if (state.filteredProductList[0] === -1) {
             return state.data
             // commit('setFilteredProductList', state.data)
             //state.filteredProductList = state.data;
         }
-        return state.filteredProductList;
+        return state.filteredProductList; */
+        return getters.getFilteredProducts()
     },
     getNumberOfProductInCategoryInFilter: (state, getters) => (id) => {
         var array = getters.getFilteredProducts.filter(item => item.categoryId === id)
