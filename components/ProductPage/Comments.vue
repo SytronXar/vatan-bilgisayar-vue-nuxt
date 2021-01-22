@@ -39,10 +39,7 @@ export default {
                   Bu ürünle toplam <a>{{ commentsLength }}</a> adet
                   yorum yapıldı.
                 </h4>
-                <form
-                  action="/ProductDetail/PostComment?Length=13"
-                  data-ajax="true"
-                  data-ajax-success="showMessage(data);if(data=='Yorumunuz Gönderildi.'){$('input[type = text], textarea').val('');$('.rank-item').removeClass('selected')}"
+                <!-- <form
                   id="comment-with-login"
                   method="post"
                   style="display: none;"
@@ -65,7 +62,7 @@ export default {
                       </div>
                     </div>
                   </div>
-                </form>
+                </form> -->
                 <div id="comment-without-login" class="container-fluid">
                   <div class="row">
                     <div class="form-group text-center">
