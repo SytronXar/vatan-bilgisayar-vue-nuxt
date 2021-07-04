@@ -1,3 +1,5 @@
+This is an school project.
+
 # vatan-bilgisayar-vue-nuxt
 
 ## Build Setup
